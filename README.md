@@ -42,6 +42,18 @@ and the system's job is to earn that status, show its work, and tell you where i
 | Visual | none | **3D dependency graph** you can fly through |
 | Provider lock-in | usually | any OpenAI- or Anthropic-compatible endpoint |
 
+### Is this just another RAG / GraphRAG tool?
+
+No — and it doesn't try to be one. LlamaIndex, LangChain and Haystack are **frameworks** you assemble; Cognee,
+GraphRAG and LightRAG build a **graph of the relationships sources state**; Onyx, Verba and AnythingLLM are
+**chat-with-your-docs apps**. veritas is opinionated the other way — a **verification-first pipeline**: every fact
+earns a status from cross-source agreement and an optional oracle; a **discover** stage hunts for the dependencies
+*no source states*; numbers come from a deterministic **calculator/oracle** so a stale document can't put a wrong
+number in an answer (RAG only explains and cites); and a single **audit gate** ships-or-blocks the whole runtime —
+corpus, calculator and assistant together. The individual ideas (claim verdicts, oracle-grounded abstention, graph
+retrieval) show up across recent research and tools; veritas's contribution is packaging them into one turnkey,
+provider-agnostic, zero-dependency tool built around a **truth ledger**.
+
 ---
 
 ## Quickstart
@@ -280,6 +292,13 @@ veritas/
 - [Guided vs autonomous](docs/guided-vs-autonomous.md) — the two operating modes + the agent flow.
 - [Operating](docs/operating.md) — the audit gate, health-ping, and re-running stages.
 
+## Credits
+
+The offline 3D graph viewer vendors two MIT-licensed libraries — [three.js](https://github.com/mrdoob/three.js)
+(© Three.js Authors) and [3d-force-graph](https://github.com/vasturiano/3d-force-graph) (© Vasco Asturiano). Full
+copyright and license notices are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
 ## License
 
-MIT — see [LICENSE](LICENSE). Contributions welcome; new source modules especially.
+MIT — see [LICENSE](LICENSE). Third-party components retain their own licenses (see
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)). Contributions welcome; new source modules especially.

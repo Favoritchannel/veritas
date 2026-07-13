@@ -42,6 +42,8 @@ All notable project changes are documented here. The project intends to follow
   than the target roadmap.
 - Fixed the GitHub-rendered Mermaid diagram by replacing a reserved `graph` node identifier.
 - Fixed an unmatched Markdown fence in the operating guide and corrected connector/config documentation drift.
+- Replaced the previous compute examples with Google Gemini, Anthropic Claude, and OpenAI models from the current
+  OpenRouter catalog; documented why search-native Perplexity models are not the default evidence-only answer tier.
 
 - Expanded the README security section to distinguish existing local secret handling from the controls required for
   an untrusted public deployment.

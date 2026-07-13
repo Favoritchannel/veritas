@@ -11,33 +11,107 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 export async function run(project) {
   const byDomain = project.readOut("facts.json", {});
   const verified = project.readOut("verified.json", { items: [] }).items || [];
-  const statusOf = new Map(verified.map((v) => [`${v.domain}|${v.statement}`, v.status]));
-  const all = Object.entries(byDomain).flatMap(([domain, arr]) => arr.map((m) => ({ ...m, domain })));
-  if (!all.length) { project.log("graph: run merge first"); return; }
+  const statusOf = new Map(
+    verified.map((v) => [`${v.domain}|${v.statement}`, v.status]),
+  );
+  const all = Object.entries(byDomain).flatMap(([domain, arr]) =>
+    arr.map((m) => ({ ...m, domain })),
+  );
+  if (!all.length) {
+    project.log("graph: run merge first");
+    return;
+  }
   const DOMAINS = project.domains;
-  const isEntity = (s) => s && typeof s === "string" && s.length <= 40 && !/[.]{2,}/.test(s);
+  const isEntity = (s) =>
+    s && typeof s === "string" && s.length <= 40 && !/[.]{2,}/.test(s);
   const norm = (s) => s.trim().toLowerCase().replace(/\s+/g, " ");
 
-  const nodes = new Map(), addN = (id, name, domain, kind) => { if (!nodes.has(id)) nodes.set(id, { id, name, domain, kind, deg: 0, facts: [] }); return nodes.get(id); };
+  const nodes = new Map(),
+    addN = (id, name, domain, kind) => {
+      if (!nodes.has(id))
+        nodes.set(id, { id, name, domain, kind, deg: 0, facts: [] });
+      return nodes.get(id);
+    };
   for (const d of DOMAINS) addN(`dom:${d}`, d, d, "domain");
-  const links = new Map(), addL = (a, b, hidden) => { if (a === b) return; const k = a < b ? `${a}~${b}` : `${b}~${a}`; const e = links.get(k) || { source: a, target: b, hidden: false }; if (hidden) e.hidden = true; links.set(k, e); };
+  const links = new Map(),
+    addL = (a, b, hidden) => {
+      if (a === b) return;
+      const k = a < b ? `${a}~${b}` : `${b}~${a}`;
+      const e = links.get(k) || { source: a, target: b, hidden: false };
+      if (hidden) e.hidden = true;
+      links.set(k, e);
+    };
   const entDom = new Map();
-  for (const m of all) for (const e of [...new Set([...(m.dependsOn || []), ...(m.affects || [])].filter(isEntity))]) if (!entDom.has(norm(e))) entDom.set(norm(e), m.domain);
+  for (const m of all)
+    for (const e of [
+      ...new Set(
+        [...(m.dependsOn || []), ...(m.affects || [])].filter(isEntity),
+      ),
+    ])
+      if (!entDom.has(norm(e))) entDom.set(norm(e), m.domain);
   for (const m of all) {
-    const deps = (m.dependsOn || []).filter(isEntity), affs = (m.affects || []).filter(isEntity);
-    const rec = { statement: m.statement, status: statusOf.get(`${m.domain}|${m.statement}`) || m.confidence, hidden: !!m.hidden, breakpoints: m.breakpoints || [] };
-    for (const e of [...new Set([...deps, ...affs])]) { const n = addN(`ent:${norm(e)}`, e, entDom.get(norm(e)) || m.domain, "entity"); if (n.facts.length < 12) n.facts.push(rec); addL(`ent:${norm(e)}`, `dom:${m.domain}`, false); }
-    for (const dep of deps) { if (affs.length) for (const a of affs) addL(`ent:${norm(dep)}`, `ent:${norm(a)}`, m.hidden); else addL(`ent:${norm(dep)}`, `dom:${m.domain}`, m.hidden); }
+    const deps = (m.dependsOn || []).filter(isEntity),
+      affs = (m.affects || []).filter(isEntity);
+    const rec = {
+      statement: m.statement,
+      status: statusOf.get(`${m.domain}|${m.statement}`) || m.confidence,
+      hidden: !!m.hidden,
+      breakpoints: m.breakpoints || [],
+    };
+    for (const e of [...new Set([...deps, ...affs])]) {
+      const n = addN(
+        `ent:${norm(e)}`,
+        e,
+        entDom.get(norm(e)) || m.domain,
+        "entity",
+      );
+      if (n.facts.length < 12) n.facts.push(rec);
+      addL(`ent:${norm(e)}`, `dom:${m.domain}`, false);
+    }
+    for (const dep of deps) {
+      if (affs.length)
+        for (const a of affs)
+          addL(`ent:${norm(dep)}`, `ent:${norm(a)}`, m.hidden);
+      else addL(`ent:${norm(dep)}`, `dom:${m.domain}`, m.hidden);
+    }
   }
   const linkArr = [...links.values()];
-  for (const e of linkArr) { nodes.get(e.source).deg++; nodes.get(e.target).deg++; }
-  const nodeArr = [...nodes.values()].filter((n) => n.kind === "domain" || n.deg > 0);
+  for (const e of linkArr) {
+    nodes.get(e.source).deg++;
+    nodes.get(e.target).deg++;
+  }
+  const nodeArr = [...nodes.values()].filter(
+    (n) => n.kind === "domain" || n.deg > 0,
+  );
   const ids = new Set(nodeArr.map((n) => n.id));
-  const DATA = { nodes: nodeArr, links: linkArr.filter((e) => ids.has(e.source) && ids.has(e.target)) };
-  const THREE = fs.readFileSync(join(HERE, "..", "templates", "graph", "_three.js"), "utf-8"); // sets window.THREE
-  const FG = fs.readFileSync(join(HERE, "..", "templates", "graph", "_3dfg.js"), "utf-8"); // uses window.THREE if present
-  const PAL = ["#f778ba", "#3fb950", "#a371f7", "#f85149", "#d29922", "#39c5cf", "#db6d28", "#9aa4b0", "#58a6ff", "#e3b341", "#bc8cff", "#7ee787"];
-  const colors = {}; DOMAINS.forEach((d, i) => (colors[d] = PAL[i % PAL.length]));
+  const DATA = {
+    nodes: nodeArr,
+    links: linkArr.filter((e) => ids.has(e.source) && ids.has(e.target)),
+  };
+  const THREE = fs.readFileSync(
+    join(HERE, "..", "templates", "graph", "_three.js"),
+    "utf-8",
+  ); // sets window.THREE
+  const FG = fs.readFileSync(
+    join(HERE, "..", "templates", "graph", "_3dfg.js"),
+    "utf-8",
+  ); // uses window.THREE if present
+  const PAL = [
+    "#f778ba",
+    "#3fb950",
+    "#a371f7",
+    "#f85149",
+    "#d29922",
+    "#39c5cf",
+    "#db6d28",
+    "#9aa4b0",
+    "#58a6ff",
+    "#e3b341",
+    "#bc8cff",
+    "#7ee787",
+  ];
+  const colors = {};
+  DOMAINS.forEach((d, i) => (colors[d] = PAL[i % PAL.length]));
 
   const html = `<title>${esc(project.config.topic)} — 3D Knowledge Graph</title>
 <style>:root{--panel:#0b1020f5;--line:#233;--txt:#c9d1d9;--dim:#8b949e}*{box-sizing:border-box}html,body{margin:0;height:100%;background:#05070d;color:var(--txt);font:13px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}#graph{position:fixed;inset:0}#side{position:fixed;top:0;right:0;width:330px;height:100vh;background:var(--panel);backdrop-filter:blur(8px);border-left:1px solid var(--line);padding:14px 16px;overflow:auto}#side h1{font-size:15px;margin:0 0 2px}.sub{color:var(--dim);font-size:11px;margin-bottom:12px}.leg{display:flex;flex-wrap:wrap;gap:6px 10px;margin:8px 0 12px}.leg span{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:11px;color:var(--dim)}.leg span.off{opacity:.32;text-decoration:line-through}.dot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 6px currentColor}#search{width:100%;background:#0d1117;border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:7px 9px;margin-bottom:10px}.row{font-size:11px;color:var(--dim);margin:6px 0}#detail{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}#detail h2{font-size:14px;margin:0 0 2px;word-break:break-word}.fct{border-left:2px solid var(--line);padding:4px 0 4px 9px;margin:8px 0}.st{font-size:10px;font-weight:700}.TRUTH,.high{color:#3fb950}.PLAUSIBLE{color:#58a6ff}.CONTRADICTED{color:#f85149}.NEEDS-VERIFICATION,.medium,.low{color:#d29922}.hint{color:var(--dim);font-size:11px}</style>
@@ -91,5 +165,7 @@ document.getElementById('search').oninput=e=>{const q=e.target.value.trim().toLo
 function detail(n){const d=document.getElementById('detail');if(n.kind==='domain'){d.innerHTML='<h2>'+esc(n.name)+'</h2><div class=sub>domain nucleus · '+n.deg+' connections</div>';return}let h='<h2>'+esc(n.name)+'</h2><div class=sub>'+esc(n.domain)+' · degree '+n.deg+' · '+n.facts.length+' fact(s)</div>';for(const m of n.facts){const st=(m.status||'').toString();h+='<div class=fct><div class="st '+st+'">'+st+(m.hidden?' · hidden':'')+'</div>'+esc(m.statement)+((m.breakpoints&&m.breakpoints.length)?'<div class=hint>'+esc(m.breakpoints.join(' · '))+'</div>':'')+'</div>'}d.innerHTML=h}
 </script>`;
   project.writeOut("graph.html", html);
-  project.log(`graph (3D): ${nodeArr.length} nodes, ${DATA.links.length} edges → graph.html (open in a browser)`);
+  project.log(
+    `graph (3D): ${nodeArr.length} nodes, ${DATA.links.length} edges → graph.html (open in a browser)`,
+  );
 }

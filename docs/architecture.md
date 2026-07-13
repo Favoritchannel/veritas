@@ -6,7 +6,7 @@ run the whole thing, inspect any intermediate artifact, fix it, and re-run a sin
 
 ## The shape of the pipeline
 
-```
+```text
 config.json ──► collect ──► consolidate ──► synthesize ──► merge ──► verify ──► discover ──► rag-pack ──► graph ──► audit
                 (raw)        (by-domain)     (facts/*)      (facts    (verified   (novel      (corpus)     (html)    (gate)
                                                             .json)     .json)      findings)
@@ -23,12 +23,12 @@ stopping on the first hard error unless `--keep-going`. Any stage can also be ru
 
 ## Core library (`src/lib/`)
 
-| Module | Responsibility |
-|--------|----------------|
-| `llm.mjs` | Provider-agnostic compute. `chat(tier, system, user)`, `chatJson()`, `vision()` speak both OpenAI-compatible and Anthropic-compatible APIs. 90s timeout, ret/backoff. Keys come from `process.env[tier.keyEnv]`; **no key → the call is skipped and the stage degrades**, it does not crash. |
-| `project.mjs` | `loadProject(configPath)` loads config + `.env`, resolves the `out` dir relative to the config, and exposes `log()`, `tier(name)`, `outPath/readOut/writeOut`, `waveWidth`, `chunkChars`, `domains`, `language`. Every stage takes a `project`. |
-| `waves.mjs` | `waves(tasks, width=3, onWave)` runs async tasks in bounded **waves** to respect rate limits; `chunk(text, size)` splits long inputs. |
-| `schema.mjs` | The vocabulary: `STATUS`, `CONF_RANK`, `normalizeDomain`, `deriveStatus(fact)`, plus `uniq`/`esc` helpers. This is where "what a status means" lives. |
+| Module        | Responsibility                                                                                                                                                                                                                                                                               |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `llm.mjs`     | Provider-agnostic compute. `chat(tier, system, user)`, `chatJson()`, `vision()` speak both OpenAI-compatible and Anthropic-compatible APIs. 90s timeout, ret/backoff. Keys come from `process.env[tier.keyEnv]`; **no key → the call is skipped and the stage degrades**, it does not crash. |
+| `project.mjs` | `loadProject(configPath)` loads config + `.env`, resolves the `out` dir relative to the config, and exposes `log()`, `tier(name)`, `outPath/readOut/writeOut`, `waveWidth`, `chunkChars`, `domains`, `language`. Every stage takes a `project`.                                              |
+| `waves.mjs`   | `waves(tasks, width=3, onWave)` runs async tasks in bounded **waves** to respect rate limits; `chunk(text, size)` splits long inputs.                                                                                                                                                        |
+| `schema.mjs`  | The vocabulary: `STATUS`, `CONF_RANK`, `normalizeDomain`, `deriveStatus(fact)`, plus `uniq`/`esc` helpers. This is where "what a status means" lives.                                                                                                                                        |
 
 ## Data shapes
 
@@ -38,12 +38,14 @@ stopping on the first hard error unless `--keep-going`. Any stage can also be ru
 {
   "text": "Finer grind raises extraction yield by increasing surface area.",
   "source": { "ref": "barista-guide", "title": "Barista Guide" },
-  "domain": "grind",            // optional hint
-  "confidence": "high",         // optional hint: high | medium | low
-  "dependsOn": ["grind size"],  // optional structured hints — preserved to the graph
+  "domain": "grind", // optional hint
+  "confidence": "high", // optional hint: high | medium | low
+  "dependsOn": ["grind size"], // optional structured hints — preserved to the graph
   "affects": ["extraction yield", "surface area"],
-  "breakpoints": [], "hidden": false,
-  "type": "files", "kind": "fact"   // stamped by the collector
+  "breakpoints": [],
+  "hidden": false,
+  "type": "files",
+  "kind": "fact", // stamped by the collector
 }
 ```
 
@@ -53,17 +55,19 @@ stopping on the first hard error unless `--keep-going`. Any stage can also be ru
 {
   "statement": "Finer grind size increases extraction yield…",
   "domain": "grind",
-  "dependsOn": ["grind size"], "affects": ["extraction yield", "surface area"],
+  "dependsOn": ["grind size"],
+  "affects": ["extraction yield", "surface area"],
   "breakpoints": ["<18% sour", "18-22% balanced", ">22% bitter"],
-  "hidden": false, "confidence": "high",
-  "source": { "ref": "…", "title": "…" }
+  "hidden": false,
+  "confidence": "high",
+  "source": { "ref": "…", "title": "…" },
 }
 ```
 
 **Verified fact** (`verify` adds a derived `status`, written to `verified.json`):
 
 ```jsonc
-{ "...fact": "…", "status": "TRUTH" }   // TRUTH | PLAUSIBLE | NEEDS-VERIFICATION | CONTRADICTED
+{ "...fact": "…", "status": "TRUTH" } // TRUTH | PLAUSIBLE | NEEDS-VERIFICATION | CONTRADICTED
 ```
 
 `verified.json` also carries a `tally` (counts per status) that the audit and reports read.

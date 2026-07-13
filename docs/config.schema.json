@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Favoritchannel/veritas/main/docs/config.schema.json",
+  "title": "veritas project configuration",
+  "description": "Editor and validation schema for a veritas project configuration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["topic", "domains", "sources"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 100,
+        "pattern": "^[^./\\\\]+$"
+      }
+    },
+    "oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": ["none", "code", "api", "dataset"]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "_comment": {
+          "type": "string"
+        }
+      },
+      "required": ["type"]
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "compute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "collect": {
+          "$ref": "#/$defs/computeTier"
+        },
+        "vision": {
+          "$ref": "#/$defs/computeTier"
+        },
+        "analyze": {
+          "$ref": "#/$defs/computeTier"
+        },
+        "serve": {
+          "$ref": "#/$defs/computeTier"
+        }
+      }
+    },
+    "parallelism": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "waves": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 3
+        },
+        "chunkChars": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "default": 12000
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxCollectDocs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxAnalyzeTokens": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        }
+      }
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 35,
+      "default": "en"
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "secretsEnv": {
+          "type": "string",
+          "default": ".env"
+        },
+        "gitignoreOutputs": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "out": {
+      "type": "string",
+      "minLength": 1,
+      "default": "out"
+    },
+    "healthPing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "intervalMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1440
+        },
+        "canaries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "calc": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cmd", "fixtures"],
+          "properties": {
+            "cmd": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fixtures": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0.5
+            }
+          }
+        },
+        "ai": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "canaries": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "drift": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cmd"],
+          "properties": {
+            "cmd": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "config"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "computeTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseURL", "model", "keyEnv"],
+      "properties": {
+        "baseURL": {
+          "type": "string",
+          "format": "uri"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyEnv": {
+          "type": "string",
+          "pattern": "^[A-Z_][A-Z0-9_]*$"
+        },
+        "compat": {
+          "enum": ["openai", "anthropic"]
+        }
+      }
+    }
+  }
+}

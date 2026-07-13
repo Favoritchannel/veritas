@@ -365,16 +365,16 @@ P2 acceptance:
 
 Use independent workstreams, but keep P0 dependencies explicit:
 
-| Workstream | Owns | Depends on |
-| --- | --- | --- |
-| Evidence and verification | schemas, independence, oracle verdicts, calibration | immutable source snapshots |
-| Pipeline runtime | manifests, atomic publish, budgets, resume/cache | schemas |
-| Retrieval and answering | indexes, filters, answer contract, citation validator | verified evidence model |
-| Security | threat model, ingestion/serve controls, abuse response, red-team suite | all trust boundaries |
-| Evaluation | gold sets, metrics, release thresholds, over-refusal | stable contracts |
-| Platform | API, auth, tenancy, queues, storage, observability | safe P0 core |
-| Developer experience | CLI, examples, docs, packaging, migrations | stable public interfaces |
-| Governance | review policy, disclosure, releases, provenance | organizational ownership |
+| Workstream                | Owns                                                                   | Depends on                 |
+| ------------------------- | ---------------------------------------------------------------------- | -------------------------- |
+| Evidence and verification | schemas, independence, oracle verdicts, calibration                    | immutable source snapshots |
+| Pipeline runtime          | manifests, atomic publish, budgets, resume/cache                       | schemas                    |
+| Retrieval and answering   | indexes, filters, answer contract, citation validator                  | verified evidence model    |
+| Security                  | threat model, ingestion/serve controls, abuse response, red-team suite | all trust boundaries       |
+| Evaluation                | gold sets, metrics, release thresholds, over-refusal                   | stable contracts           |
+| Platform                  | API, auth, tenancy, queues, storage, observability                     | safe P0 core               |
+| Developer experience      | CLI, examples, docs, packaging, migrations                             | stable public interfaces   |
+| Governance                | review policy, disclosure, releases, provenance                        | organizational ownership   |
 
 ## Release decision record
 

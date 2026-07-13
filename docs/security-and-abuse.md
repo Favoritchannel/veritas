@@ -329,11 +329,11 @@ legitimate users, while attackers rotate addresses. Require all applicable bucke
 
 Illustrative starting policy—tune it from real traffic, accessibility needs, provider limits, and cost models:
 
-| Class | Burst | Per minute | Per hour | Per day | Concurrent generations |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Anonymous preview | 3 | 3 | 30 | 100 | 1 |
-| Authenticated standard | 5 | 10 | configurable | configurable | 1–2 |
-| Expensive analysis | 1 | configurable | configurable | configurable | 1 |
+| Class                  | Burst |   Per minute |     Per hour |      Per day | Concurrent generations |
+| ---------------------- | ----: | -----------: | -----------: | -----------: | ---------------------: |
+| Anonymous preview      |     3 |            3 |           30 |          100 |                      1 |
+| Authenticated standard |     5 |           10 | configurable | configurable |                    1–2 |
+| Expensive analysis     |     1 | configurable | configurable | configurable |                      1 |
 
 Additional bounds:
 

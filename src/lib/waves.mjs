@@ -14,4 +14,8 @@ export async function waves(tasks, width = 3, onWave) {
 }
 
 // chunk a long string into pieces of ~size chars (for LLM context windows)
-export const chunk = (t, size = 12000) => { const out = []; for (let i = 0; i < t.length; i += size) out.push(t.slice(i, i + size)); return out; };
+export const chunk = (t, size = 12000) => {
+  const out = [];
+  for (let i = 0; i < t.length; i += size) out.push(t.slice(i, i + size));
+  return out;
+};

@@ -10,18 +10,52 @@
   },
 
   "sources": [
-    { "type": "web", "config": { "seeds": ["https://example.com/topic"], "maxPages": 50, "vision": true } },
-    { "type": "youtube", "config": { "ids": [], "channels": [], "transcribe": "captions-then-whisper" } },
-    { "type": "chat-export", "config": { "path": "raw/chat/*.json", "format": "generic" } },
+    {
+      "type": "web",
+      "config": {
+        "seeds": ["https://example.com/topic"],
+        "maxPages": 50,
+        "vision": true
+      }
+    },
+    {
+      "type": "youtube",
+      "config": {
+        "ids": [],
+        "channels": [],
+        "transcribe": "captions-then-whisper"
+      }
+    },
+    {
+      "type": "chat-export",
+      "config": { "path": "raw/chat/*.json", "format": "generic" }
+    },
     { "type": "pdf", "config": { "path": "raw/papers/*.pdf" } },
     { "type": "files", "config": { "path": "raw/docs/**/*.md" } }
   ],
 
   "compute": {
-    "collect": { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "COLLECT_KEY" },
-    "vision":  { "baseURL": "https://openrouter.ai/api/v1", "model": "google/gemini-2.5-flash", "keyEnv": "COLLECT_KEY" },
-    "analyze": { "baseURL": "https://api.anthropic.com/v1", "model": "claude-sonnet", "keyEnv": "ANALYZE_KEY", "compat": "anthropic" },
-    "serve":   { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "SERVE_KEY" }
+    "collect": {
+      "baseURL": "https://openrouter.ai/api/v1",
+      "model": "deepseek/deepseek-v4-flash",
+      "keyEnv": "COLLECT_KEY"
+    },
+    "vision": {
+      "baseURL": "https://openrouter.ai/api/v1",
+      "model": "google/gemini-2.5-flash",
+      "keyEnv": "COLLECT_KEY"
+    },
+    "analyze": {
+      "baseURL": "https://api.anthropic.com/v1",
+      "model": "claude-sonnet",
+      "keyEnv": "ANALYZE_KEY",
+      "compat": "anthropic"
+    },
+    "serve": {
+      "baseURL": "https://openrouter.ai/api/v1",
+      "model": "deepseek/deepseek-v4-flash",
+      "keyEnv": "SERVE_KEY"
+    }
   },
 
   "parallelism": { "waves": 3, "chunkChars": 12000 },

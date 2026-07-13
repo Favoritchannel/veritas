@@ -22,7 +22,7 @@ node bin/veritas.mjs audit         veritas.config.json
 
 The natural pause is **after `verify`**: read `out/next-targets.md` (the completeness critic). It
 tells you which domains are thin and which facts are stuck at `NEEDS-VERIFICATION`. Add sources,
-re-run `collect`→`verify`, and repeat until the ledger is solid — *then* finish the chain.
+re-run `collect`→`verify`, and repeat until the ledger is solid — _then_ finish the chain.
 
 Because every stage persists to `out/`, stopping and resuming is free; you never recompute a stage
 you didn't change.
@@ -59,11 +59,11 @@ The guardrail that matters: **the agent never claims done on a NO-GO audit or a 
 
 ## Which do I pick?
 
-| You want to… | Mode |
-|---|---|
-| Learn the tool / explore a new topic | Guided |
-| See what each stage produces before continuing | Guided |
-| Iterate on coverage with the completeness critic | Guided |
-| Rebuild a known knowledge base on a schedule | Autonomous |
-| Gate a downstream job on "is this verified?" | Autonomous |
-| Let an agent deliver a finished project | Autonomous (with the audit gate) |
+| You want to…                                     | Mode                             |
+| ------------------------------------------------ | -------------------------------- |
+| Learn the tool / explore a new topic             | Guided                           |
+| See what each stage produces before continuing   | Guided                           |
+| Iterate on coverage with the completeness critic | Guided                           |
+| Rebuild a known knowledge base on a schedule     | Autonomous                       |
+| Gate a downstream job on "is this verified?"     | Autonomous                       |
+| Let an agent deliver a finished project          | Autonomous (with the audit gate) |

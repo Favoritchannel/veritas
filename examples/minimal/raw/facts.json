@@ -1,25 +1,205 @@
 [
-  { "statement": "Finer grind size increases extraction yield by raising the coffee surface area exposed to water.", "domain": "grind", "dependsOn": ["grind size"], "affects": ["extraction yield", "surface area"], "confidence": "high", "source": { "ref": "barista-guide", "title": "Barista Guide" } },
-  { "statement": "Finer grind size increases flow resistance, which raises brew pressure and slows the shot.", "domain": "grind", "dependsOn": ["grind size"], "affects": ["flow resistance", "brew pressure", "shot time"], "hidden": true, "confidence": "high", "source": { "ref": "barista-guide", "title": "Barista Guide" } },
-  { "statement": "A sour shot is under-extracted; grinding finer or raising water temperature raises extraction yield to fix it.", "domain": "extraction", "dependsOn": ["extraction yield", "grind size", "water temperature"], "affects": ["taste balance"], "confidence": "high", "source": { "ref": "extraction-theory", "title": "Extraction Theory" } },
-  { "statement": "A bitter shot is over-extracted; grinding coarser or lowering water temperature lowers extraction yield to fix it.", "domain": "extraction", "dependsOn": ["extraction yield", "grind size", "water temperature"], "affects": ["taste balance"], "confidence": "high", "source": { "ref": "extraction-theory", "title": "Extraction Theory" } },
-  { "statement": "Extraction yield is measured as TDS times beverage mass divided by dry dose; target is roughly 18-22 percent.", "domain": "extraction", "dependsOn": ["TDS", "dose", "beverage mass"], "affects": ["extraction yield"], "values": "target 18-22%", "breakpoints": ["<18% sour", "18-22% balanced", ">22% bitter"], "confidence": "high", "source": { "ref": "sca-standard", "title": "SCA Standard" } },
-  { "statement": "Dose is the mass of dry coffee in the basket; higher dose in a fixed basket raises the puck density and flow resistance.", "domain": "extraction", "dependsOn": ["dose", "basket size"], "affects": ["puck density", "flow resistance"], "hidden": true, "confidence": "medium", "source": { "ref": "extraction-theory", "title": "Extraction Theory" } },
-  { "statement": "Brew ratio is beverage mass divided by dose; a 1:2 ratio is a typical modern espresso.", "domain": "extraction", "dependsOn": ["dose", "beverage mass"], "affects": ["brew ratio", "strength"], "values": "1:2 typical", "confidence": "high", "source": { "ref": "sca-standard", "title": "SCA Standard" } },
-  { "statement": "Higher water temperature increases extraction yield, especially of the slower-dissolving bitter compounds.", "domain": "water", "dependsOn": ["water temperature"], "affects": ["extraction yield"], "values": "90-96 C typical", "confidence": "high", "source": { "ref": "water-chemistry", "title": "Water Chemistry" } },
-  { "statement": "Water hardness (calcium and magnesium) increases extraction of flavor but scale forms above about 4 grains per gallon.", "domain": "water", "dependsOn": ["water hardness"], "affects": ["extraction yield", "scale"], "breakpoints": [">4 gpg scale risk"], "hidden": true, "confidence": "medium", "source": { "ref": "water-chemistry", "title": "Water Chemistry" } },
-  { "statement": "Scale buildup from hard water lowers the machine's effective heating and clogs the group, reducing brew pressure over time.", "domain": "machine", "dependsOn": ["scale"], "affects": ["brew pressure", "heat stability"], "hidden": true, "confidence": "medium", "source": { "ref": "machine-maintenance", "title": "Machine Maintenance" } },
-  { "statement": "The pump targets about 9 bar of brew pressure at the puck for classic espresso.", "domain": "machine", "dependsOn": ["pump"], "affects": ["brew pressure"], "values": "9 bar", "confidence": "high", "source": { "ref": "machine-basics", "title": "Machine Basics" } },
-  { "statement": "Pre-infusion applies low pressure first to wet the puck evenly, reducing channeling before full pressure.", "domain": "machine", "dependsOn": ["pre-infusion"], "affects": ["channeling", "even extraction"], "confidence": "high", "source": { "ref": "machine-basics", "title": "Machine Basics" } },
-  { "statement": "Channeling is water finding a low-resistance path through the puck, causing uneven and lower extraction yield.", "domain": "extraction", "dependsOn": ["puck prep", "channeling"], "affects": ["extraction yield", "even extraction"], "hidden": true, "confidence": "high", "source": { "ref": "puck-prep", "title": "Puck Prep" } },
-  { "statement": "Distributing and tamping level (puck prep) reduces channeling by making flow resistance uniform across the puck.", "domain": "extraction", "dependsOn": ["puck prep"], "affects": ["channeling", "flow resistance"], "confidence": "high", "source": { "ref": "puck-prep", "title": "Puck Prep" } },
-  { "statement": "Roast level shifts solubility: darker roasts are more soluble and extract faster, so they often want a coarser grind.", "domain": "beans", "dependsOn": ["roast level"], "affects": ["solubility", "grind size", "extraction yield"], "hidden": true, "confidence": "medium", "source": { "ref": "roasting", "title": "Roasting" } },
-  { "statement": "Fresh beans off-gas CO2, which causes gushing and unstable flow for the first few days after roast.", "domain": "beans", "dependsOn": ["bean freshness"], "affects": ["flow resistance", "channeling"], "breakpoints": ["rest 3-14 days after roast"], "hidden": true, "confidence": "medium", "source": { "ref": "degassing", "title": "Degassing" } },
-  { "statement": "Bean origin and process (washed vs natural) set the flavor ceiling; brewing can only reveal, not add, those notes.", "domain": "beans", "dependsOn": ["bean origin"], "affects": ["flavor ceiling"], "confidence": "medium", "source": { "ref": "green-coffee", "title": "Green Coffee" } },
-  { "statement": "Milk steaming introduces air first (stretching) then heats and folds it to build glossy microfoam.", "domain": "milk", "dependsOn": ["steam wand"], "affects": ["microfoam"], "confidence": "high", "source": { "ref": "latte-art", "title": "Latte Art" } },
-  { "statement": "Overheating milk past about 65 C scalds it, breaking down proteins and destroying microfoam and sweetness.", "domain": "milk", "dependsOn": ["milk temperature"], "affects": ["microfoam", "sweetness"], "breakpoints": [">65 C scalded"], "hidden": true, "confidence": "high", "source": { "ref": "latte-art", "title": "Latte Art" } },
-  { "statement": "Higher-fat and higher-protein milk foams more stably, so whole milk holds microfoam longer than skim.", "domain": "milk", "dependsOn": ["milk fat", "milk protein"], "affects": ["microfoam"], "confidence": "medium", "source": { "ref": "milk-science", "title": "Milk Science" } },
-  { "statement": "Shot time is an OUTPUT of grind, dose and pressure, not a target to dial directly; chasing a fixed time by feel hides the real levers.", "domain": "extraction", "dependsOn": ["grind size", "dose", "brew pressure"], "affects": ["shot time"], "hidden": true, "confidence": "medium", "source": { "ref": "extraction-theory", "title": "Extraction Theory" } },
-  { "statement": "Basket size sets the headspace above the puck; too much headspace lets the puck expand and channel.", "domain": "machine", "dependsOn": ["basket size", "dose"], "affects": ["channeling", "headspace"], "hidden": true, "confidence": "low", "source": { "ref": "basket-guide", "title": "Basket Guide" } },
-  { "statement": "Strength (TDS) is driven mainly by brew ratio, while flavor balance is driven mainly by extraction yield — two independent axes people conflate.", "domain": "extraction", "dependsOn": ["brew ratio", "extraction yield"], "affects": ["strength", "taste balance"], "hidden": true, "confidence": "high", "source": { "ref": "control-chart", "title": "Coffee Control Chart" } }
+  {
+    "statement": "Finer grind size increases extraction yield by raising the coffee surface area exposed to water.",
+    "domain": "grind",
+    "dependsOn": ["grind size"],
+    "affects": ["extraction yield", "surface area"],
+    "confidence": "high",
+    "source": { "ref": "barista-guide", "title": "Barista Guide" }
+  },
+  {
+    "statement": "Finer grind size increases flow resistance, which raises brew pressure and slows the shot.",
+    "domain": "grind",
+    "dependsOn": ["grind size"],
+    "affects": ["flow resistance", "brew pressure", "shot time"],
+    "hidden": true,
+    "confidence": "high",
+    "source": { "ref": "barista-guide", "title": "Barista Guide" }
+  },
+  {
+    "statement": "A sour shot is under-extracted; grinding finer or raising water temperature raises extraction yield to fix it.",
+    "domain": "extraction",
+    "dependsOn": ["extraction yield", "grind size", "water temperature"],
+    "affects": ["taste balance"],
+    "confidence": "high",
+    "source": { "ref": "extraction-theory", "title": "Extraction Theory" }
+  },
+  {
+    "statement": "A bitter shot is over-extracted; grinding coarser or lowering water temperature lowers extraction yield to fix it.",
+    "domain": "extraction",
+    "dependsOn": ["extraction yield", "grind size", "water temperature"],
+    "affects": ["taste balance"],
+    "confidence": "high",
+    "source": { "ref": "extraction-theory", "title": "Extraction Theory" }
+  },
+  {
+    "statement": "Extraction yield is measured as TDS times beverage mass divided by dry dose; target is roughly 18-22 percent.",
+    "domain": "extraction",
+    "dependsOn": ["TDS", "dose", "beverage mass"],
+    "affects": ["extraction yield"],
+    "values": "target 18-22%",
+    "breakpoints": ["<18% sour", "18-22% balanced", ">22% bitter"],
+    "confidence": "high",
+    "source": { "ref": "sca-standard", "title": "SCA Standard" }
+  },
+  {
+    "statement": "Dose is the mass of dry coffee in the basket; higher dose in a fixed basket raises the puck density and flow resistance.",
+    "domain": "extraction",
+    "dependsOn": ["dose", "basket size"],
+    "affects": ["puck density", "flow resistance"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "extraction-theory", "title": "Extraction Theory" }
+  },
+  {
+    "statement": "Brew ratio is beverage mass divided by dose; a 1:2 ratio is a typical modern espresso.",
+    "domain": "extraction",
+    "dependsOn": ["dose", "beverage mass"],
+    "affects": ["brew ratio", "strength"],
+    "values": "1:2 typical",
+    "confidence": "high",
+    "source": { "ref": "sca-standard", "title": "SCA Standard" }
+  },
+  {
+    "statement": "Higher water temperature increases extraction yield, especially of the slower-dissolving bitter compounds.",
+    "domain": "water",
+    "dependsOn": ["water temperature"],
+    "affects": ["extraction yield"],
+    "values": "90-96 C typical",
+    "confidence": "high",
+    "source": { "ref": "water-chemistry", "title": "Water Chemistry" }
+  },
+  {
+    "statement": "Water hardness (calcium and magnesium) increases extraction of flavor but scale forms above about 4 grains per gallon.",
+    "domain": "water",
+    "dependsOn": ["water hardness"],
+    "affects": ["extraction yield", "scale"],
+    "breakpoints": [">4 gpg scale risk"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "water-chemistry", "title": "Water Chemistry" }
+  },
+  {
+    "statement": "Scale buildup from hard water lowers the machine's effective heating and clogs the group, reducing brew pressure over time.",
+    "domain": "machine",
+    "dependsOn": ["scale"],
+    "affects": ["brew pressure", "heat stability"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "machine-maintenance", "title": "Machine Maintenance" }
+  },
+  {
+    "statement": "The pump targets about 9 bar of brew pressure at the puck for classic espresso.",
+    "domain": "machine",
+    "dependsOn": ["pump"],
+    "affects": ["brew pressure"],
+    "values": "9 bar",
+    "confidence": "high",
+    "source": { "ref": "machine-basics", "title": "Machine Basics" }
+  },
+  {
+    "statement": "Pre-infusion applies low pressure first to wet the puck evenly, reducing channeling before full pressure.",
+    "domain": "machine",
+    "dependsOn": ["pre-infusion"],
+    "affects": ["channeling", "even extraction"],
+    "confidence": "high",
+    "source": { "ref": "machine-basics", "title": "Machine Basics" }
+  },
+  {
+    "statement": "Channeling is water finding a low-resistance path through the puck, causing uneven and lower extraction yield.",
+    "domain": "extraction",
+    "dependsOn": ["puck prep", "channeling"],
+    "affects": ["extraction yield", "even extraction"],
+    "hidden": true,
+    "confidence": "high",
+    "source": { "ref": "puck-prep", "title": "Puck Prep" }
+  },
+  {
+    "statement": "Distributing and tamping level (puck prep) reduces channeling by making flow resistance uniform across the puck.",
+    "domain": "extraction",
+    "dependsOn": ["puck prep"],
+    "affects": ["channeling", "flow resistance"],
+    "confidence": "high",
+    "source": { "ref": "puck-prep", "title": "Puck Prep" }
+  },
+  {
+    "statement": "Roast level shifts solubility: darker roasts are more soluble and extract faster, so they often want a coarser grind.",
+    "domain": "beans",
+    "dependsOn": ["roast level"],
+    "affects": ["solubility", "grind size", "extraction yield"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "roasting", "title": "Roasting" }
+  },
+  {
+    "statement": "Fresh beans off-gas CO2, which causes gushing and unstable flow for the first few days after roast.",
+    "domain": "beans",
+    "dependsOn": ["bean freshness"],
+    "affects": ["flow resistance", "channeling"],
+    "breakpoints": ["rest 3-14 days after roast"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "degassing", "title": "Degassing" }
+  },
+  {
+    "statement": "Bean origin and process (washed vs natural) set the flavor ceiling; brewing can only reveal, not add, those notes.",
+    "domain": "beans",
+    "dependsOn": ["bean origin"],
+    "affects": ["flavor ceiling"],
+    "confidence": "medium",
+    "source": { "ref": "green-coffee", "title": "Green Coffee" }
+  },
+  {
+    "statement": "Milk steaming introduces air first (stretching) then heats and folds it to build glossy microfoam.",
+    "domain": "milk",
+    "dependsOn": ["steam wand"],
+    "affects": ["microfoam"],
+    "confidence": "high",
+    "source": { "ref": "latte-art", "title": "Latte Art" }
+  },
+  {
+    "statement": "Overheating milk past about 65 C scalds it, breaking down proteins and destroying microfoam and sweetness.",
+    "domain": "milk",
+    "dependsOn": ["milk temperature"],
+    "affects": ["microfoam", "sweetness"],
+    "breakpoints": [">65 C scalded"],
+    "hidden": true,
+    "confidence": "high",
+    "source": { "ref": "latte-art", "title": "Latte Art" }
+  },
+  {
+    "statement": "Higher-fat and higher-protein milk foams more stably, so whole milk holds microfoam longer than skim.",
+    "domain": "milk",
+    "dependsOn": ["milk fat", "milk protein"],
+    "affects": ["microfoam"],
+    "confidence": "medium",
+    "source": { "ref": "milk-science", "title": "Milk Science" }
+  },
+  {
+    "statement": "Shot time is an OUTPUT of grind, dose and pressure, not a target to dial directly; chasing a fixed time by feel hides the real levers.",
+    "domain": "extraction",
+    "dependsOn": ["grind size", "dose", "brew pressure"],
+    "affects": ["shot time"],
+    "hidden": true,
+    "confidence": "medium",
+    "source": { "ref": "extraction-theory", "title": "Extraction Theory" }
+  },
+  {
+    "statement": "Basket size sets the headspace above the puck; too much headspace lets the puck expand and channel.",
+    "domain": "machine",
+    "dependsOn": ["basket size", "dose"],
+    "affects": ["channeling", "headspace"],
+    "hidden": true,
+    "confidence": "low",
+    "source": { "ref": "basket-guide", "title": "Basket Guide" }
+  },
+  {
+    "statement": "Strength (TDS) is driven mainly by brew ratio, while flavor balance is driven mainly by extraction yield — two independent axes people conflate.",
+    "domain": "extraction",
+    "dependsOn": ["brew ratio", "extraction yield"],
+    "affects": ["strength", "taste balance"],
+    "hidden": true,
+    "confidence": "high",
+    "source": { "ref": "control-chart", "title": "Coffee Control Chart" }
+  }
 ]

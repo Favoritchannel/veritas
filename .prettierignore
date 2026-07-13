@@ -1,0 +1,6 @@
+.git/
+node_modules/
+**/out/
+package-lock.json
+src/templates/graph/_three.js
+src/templates/graph/_3dfg.js

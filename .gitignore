@@ -22,5 +22,7 @@ vector-store/
 # --- node / os ---
 node_modules/
 npm-debug.log*
+coverage/
+*.tgz
 .DS_Store
 Thumbs.db

@@ -11,7 +11,7 @@ is documented in the changelog.
 
 ## Interface stability
 
-veritas is currently `0.x` software. Configuration fields, artifact schemas, status semantics, and CLI behavior may
+Veritas KB is currently `0.x` software. Configuration fields, artifact schemas, status semantics, and CLI behavior may
 change between minor releases. Pin a commit or release for production experiments and review migrations before
 upgrading.
 

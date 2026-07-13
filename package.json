@@ -2,7 +2,7 @@
   "name": "veritas-kb",
   "version": "0.1.0",
   "private": true,
-  "description": "Experimental CLI and reference implementation for provenance-aware knowledge corpora and reviewable dependency graphs.",
+  "description": "Veritas KB: an experimental CLI and reference implementation for provenance-aware knowledge corpora and reviewable dependency graphs.",
   "type": "module",
   "bin": {
     "veritas": "bin/veritas.mjs"

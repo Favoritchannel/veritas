@@ -85,7 +85,7 @@ export async function run(project, { flags, positional }) {
     output: process.stdout,
   });
   console.log(
-    `\nveritas serve — ask about "${project.config.topic}" (ctrl-c to exit)\n`,
+    `\nVeritas KB serve — ask about "${project.config.topic}" (ctrl-c to exit)\n`,
   );
   const loop = () =>
     rl.question("? ", async (line) => {

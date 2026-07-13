@@ -1,6 +1,6 @@
 # Third-party notices
 
-veritas itself has **no required runtime dependencies**. For the offline 3D knowledge-graph viewer
+Veritas KB itself has **no required runtime dependencies**. For the offline 3D knowledge-graph viewer
 (`src/stages/build-graph.mjs`) it **vendors** two third-party libraries as pre-built UMD bundles, which are
 redistributed in this repository under the terms below. Their copyright and permission notices are reproduced here
 as their MIT licenses require.

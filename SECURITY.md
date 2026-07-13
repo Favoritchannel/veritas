@@ -2,7 +2,7 @@
 
 ## Project status
 
-veritas is currently an early reference implementation. The local CLI demonstrates the architecture, but it should
+Veritas KB is currently an early reference implementation. The local CLI demonstrates the architecture, but it should
 not be exposed directly as an untrusted public service without the controls described in
 [Security, prompt injection, and abuse prevention](docs/security-and-abuse.md).
 

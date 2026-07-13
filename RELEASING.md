@@ -1,6 +1,6 @@
 # Release process
 
-veritas uses Semantic Versioning while the public interface is unstable: `0.x` releases may contain breaking changes,
+Veritas KB uses Semantic Versioning while the public interface is unstable: `0.x` releases may contain breaking changes,
 which must be called out in the changelog and release notes.
 
 The npm package is intentionally private today. Releases are source and package-preview artifacts for review; npm

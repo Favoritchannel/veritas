@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// veritas CLI — orchestrates the pipeline.
+// Veritas KB CLI — orchestrates the pipeline.
 //   veritas run --auto <config.json>     # full autonomous build (collect → … → audit)
 //   veritas <stage> <config.json>        # run one stage (collect|consolidate|synthesize|merge|verify|discover|rag-pack|graph|serve|audit|health-ping)
 //   veritas guide                        # print the guided setup walkthrough
@@ -46,7 +46,7 @@ const flags = new Set(rest.filter((a) => a.startsWith("--")));
 const positional = rest.filter((a) => !a.startsWith("--"));
 
 function banner() {
-  console.log("\n  veritas — verified knowledge base + answering AI\n");
+  console.log("\n  Veritas KB — verified knowledge base + answering AI\n");
 }
 
 async function runStage(stage, project) {

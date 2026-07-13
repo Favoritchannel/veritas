@@ -1,0 +1,26 @@
+{
+  "topic": "Espresso brewing",
+  "domains": ["extraction", "grind", "machine", "beans", "water", "milk"],
+
+  "oracle": { "type": "none", "ref": "" },
+
+  "sources": [
+    { "type": "files", "config": { "path": "raw/**/*.json" } }
+  ],
+
+  "compute": {
+    "collect": { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "COLLECT_KEY" },
+    "analyze": { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "ANALYZE_KEY" },
+    "serve":   { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "SERVE_KEY" }
+  },
+
+  "parallelism": { "waves": 3, "chunkChars": 12000 },
+  "language": "en",
+  "out": "out",
+
+  "healthPing": {
+    "enabled": false,
+    "intervalMinutes": 1440,
+    "canaries": ["What grind change fixes a sour shot?"]
+  }
+}

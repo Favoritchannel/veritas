@@ -1,6 +1,6 @@
 # Governance
 
-veritas currently uses a maintainer-led governance model appropriate for an early-stage reference implementation.
+Veritas KB currently uses a maintainer-led governance model appropriate for an early-stage reference implementation.
 
 ## Roles
 

@@ -1,6 +1,6 @@
 # Operating
 
-How to run veritas day to day: the pipeline, re-running single stages, the audit gate (including functional QA of a
+How to run Veritas KB day to day: the pipeline, re-running single stages, the audit gate (including functional QA of a
 runtime system), the answering AI, and health-ping.
 
 ## Run the whole pipeline
@@ -11,7 +11,7 @@ veritas run --auto veritas.config.json
 
 Walks `collect → consolidate → synthesize → merge → verify → discover → rag-pack → graph → audit`, stopping at the
 first hard error (or continuing past soft ones with `--keep-going`). It ends at the **audit gate**, which exits
-non-zero on NO-GO — so a CI job can treat veritas's exit code as "is this build trustworthy?".
+non-zero on NO-GO — so a CI job can treat the Veritas KB CLI's exit code as "is this build trustworthy?".
 
 ## Re-run a single stage
 
@@ -44,7 +44,7 @@ Exit code is `2` on NO-GO (unless `--soft`). A secret-scan hit is a stop-everyth
 ### Functional QA — gating a runtime system, not just the corpus
 
 Add a `qa` block to your config and the SAME auditor also runs functional tests over an external calculator and the
-answering AI. This is how veritas gates a whole product (e.g. a builder + its assistant), not only the knowledge base.
+answering AI. This is how Veritas KB gates a whole product (e.g. a builder + its assistant), not only the knowledge base.
 Everything is config-driven so the tool stays generic:
 
 ```jsonc
@@ -76,7 +76,7 @@ These checks are intentionally small and do not establish production readiness.
 
 When your knowledge corpus contains numbers that can go stale (versioned data, changing APIs), do **not** let the RAG
 quote them. Point the answering layer at a deterministic **calculator/oracle** for numbers and let the corpus supply
-only explanation + provenance. In veritas this is the same principle as the `oracle` in verification: the authoritative
+only explanation + provenance. In Veritas KB this is the same principle as the `oracle` in verification: the authoritative
 number comes from the oracle/calculator; retrieved docs carry a status (and, if you tag it, a live-currency marker) so
 the answer can say _how sure_ and _how current_ a fact is. The `qa:calc` gate above is what proves the calculator still
 matches the configured fixtures before review of the AI's phrasing.

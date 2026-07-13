@@ -1,6 +1,6 @@
 <div align="center">
 
-# veritas
+# Veritas KB
 
 **Build an evidence-tracked knowledge corpus, answering workflow, and reviewable dependency graph from mixed
 sources.**
@@ -11,9 +11,11 @@ sources.**
 [![Node.js 22+](https://img.shields.io/badge/node-%3E%3D22.13-339933.svg)](package.json)
 [![Status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](#project-status)
 
-veritas is a small, provider-flexible Node.js reference implementation. It turns source material into a claim ledger,
+Veritas KB is a small, provider-flexible Node.js reference implementation. It turns source material into a claim ledger,
 a queryable corpus, candidate cross-source relationships for expert review, and a self-contained 3D dependency graph.
 Run it stage by stage or finish with a local go/no-go structural audit.
+
+**Veritas KB** is the public project name. The package remains `veritas-kb`, and the CLI command remains `veritas`.
 
 [Quickstart](#quickstart) · [How it works](#how-it-works) · [The truth ledger](#the-truth-ledger) ·
 [Add a source](#add-your-own-source-90-seconds) · [Guided vs autonomous](#two-ways-to-run) ·
@@ -30,10 +32,10 @@ Run it stage by stage or finish with a local go/no-go structural audit.
 > isolation, or production readiness. Status labels are provisional signals produced by the current rules. Review the
 > [known limitations and production roadmap](docs/production-roadmap.md) before relying on results.
 
-## What you build with veritas
+## What you build with Veritas KB
 
-veritas is a **reusable template**, not a hosted service and not a prebuilt knowledge base. Bring a topic, mixed
-sources, and—when available—an authoritative specification, dataset, codebase, or calculator. veritas provides the
+Veritas KB is a **reusable template**, not a hosted service and not a prebuilt knowledge base. Bring a topic, mixed
+sources, and—when available—an authoritative specification, dataset, codebase, or calculator. Veritas KB provides the
 pipeline for turning them into an inspectable claim ledger, a cited answering assistant, candidate hidden
 connections, a dependency graph, and a release gate.
 
@@ -50,14 +52,14 @@ You can use the template to build:
 - a discovery workflow that proposes testable cross-source relationships for expert review;
 - a CI-gated knowledge runtime whose corpus, calculator, and assistant are evaluated together.
 
-veritas does **not** make model output automatically true. Its statuses, discovery candidates, and audit checks are
+Veritas KB does **not** make model output automatically true. Its statuses, discovery candidates, and audit checks are
 decision-support signals that must be calibrated and evaluated for each domain. See the
 [production roadmap](docs/production-roadmap.md) for the path from the current reference implementation to a
 production-grade platform.
 
 ---
 
-## Why veritas exists
+## Why Veritas KB exists
 
 Most "chat with your docs" tools do three things badly:
 
@@ -67,10 +69,10 @@ Most "chat with your docs" tools do three things badly:
 3. **They hand you a black box.** No coverage report, no provenance, no gate that says "this is
    ready" or "this domain is thin, collect more."
 
-veritas takes a different approach: **represent a fact as a claim with provenance and a provisional status, expose the
+Veritas KB takes a different approach: **represent a fact as a claim with provenance and a provisional status, expose the
 current rule that produced that status, and show where evidence is still weak.**
 
-| Capability              | Retrieval-only baseline         | veritas reference workflow                                                 |
+| Capability              | Retrieval-only baseline         | Veritas KB reference workflow                                              |
 | ----------------------- | ------------------------------- | -------------------------------------------------------------------------- |
 | Claim status            | chunks are usually unclassified | provisional `TRUTH · PLAUSIBLE · NEEDS-VERIFICATION · CONTRADICTED` labels |
 | Provenance              | document-level metadata         | source references carried into claim artifacts                             |
@@ -232,7 +234,7 @@ joins the pipeline. Full contract, vision helpers, and graceful-degradation rule
 | Behavior         | explains each step, stops at the completeness critic to tell you what to collect next | runs collect→…→audit unattended, stops only on a hard error or a NO-GO gate |
 | Best paired with | a human in the loop                                                                   | the audit gate + health-ping                                                |
 
-When veritas runs **inside an agent** (see [SKILL.md](SKILL.md)), the agent turns the guided
+When Veritas KB runs **inside an agent** (see [SKILL.md](SKILL.md)), the agent turns the guided
 checklist into real questions, or — once sources are configured — runs autonomously and hands back
 the finished project only after the auditor returns GO. See
 [docs/guided-vs-autonomous.md](docs/guided-vs-autonomous.md).
@@ -241,7 +243,7 @@ the finished project only after the auditor returns GO. See
 
 ## Compute tiers (provider-agnostic)
 
-veritas accepts OpenAI-compatible and Anthropic-compatible endpoint shapes. You declare up to four tiers, with API
+Veritas KB accepts OpenAI-compatible and Anthropic-compatible endpoint shapes. You declare up to four tiers, with API
 keys read from `.env`:
 
 ```jsonc
@@ -254,7 +256,7 @@ keys read from `.env`:
 ```
 
 Use a cheap model to **collect** at volume, a strong one to **analyze** (where quality matters),
-and any model to **serve**. Mix vendors freely. Omit keys and veritas **degrades gracefully** —
+and any model to **serve**. Mix vendors freely. Omit keys and Veritas KB **degrades gracefully** —
 it still runs offline: consolidation, merge, graph, and an extractive serve all work keyless (the
 bundled example proves it). See [docs/config-reference.md](docs/config-reference.md).
 
@@ -306,7 +308,7 @@ See [docs/operating.md](docs/operating.md).
 
 ## Cost model
 
-You pay only for the models you plug in; veritas adds no service.
+You pay only for the models you plug in; Veritas KB adds no service.
 
 | Lever                   | Effect                                                                        |
 | ----------------------- | ----------------------------------------------------------------------------- |
@@ -335,7 +337,7 @@ veritas/
 ├─ docs/                        # architecture · verification · operating · security · production roadmap
 ├─ test/ · scripts/             # unit/smoke tests · repository and package checks
 ├─ .github/                     # CI · CodeQL · Scorecard · issue/PR templates · Dependabot
-├─ SKILL.md                     # how an agent runs veritas
+├─ SKILL.md                     # how an agent runs Veritas KB
 ├─ CONTRIBUTING.md · GOVERNANCE.md · SUPPORT.md · RELEASING.md
 ├─ SECURITY.md · CODE_OF_CONDUCT.md · CHANGELOG.md
 ├─ veritas.config.example.json · .env.example · LICENSE (MIT)

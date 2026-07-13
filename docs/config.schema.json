@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/Favoritchannel/veritas/main/docs/config.schema.json",
-  "title": "veritas project configuration",
-  "description": "Editor and validation schema for a veritas project configuration.",
+  "title": "Veritas KB project configuration",
+  "description": "Editor and validation schema for a Veritas KB project configuration.",
   "type": "object",
   "additionalProperties": false,
   "required": ["topic", "domains", "sources"],

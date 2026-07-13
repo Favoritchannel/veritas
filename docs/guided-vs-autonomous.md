@@ -1,6 +1,6 @@
 # Guided vs autonomous
 
-veritas runs two ways. Same pipeline, different amount of hand-holding.
+Veritas KB runs two ways. Same pipeline, different amount of hand-holding.
 
 ## Guided — a human in the loop
 
@@ -37,14 +37,14 @@ node bin/veritas.mjs run --auto veritas.config.json
 
 This walks the whole chain (`collect → … → audit`) and stops on the first hard error (or continues
 past soft ones with `--keep-going`). It **ends at the audit gate**, which exits non-zero on NO-GO —
-so a wrapper/CI job can treat veritas's exit code as "is this build trustworthy?"
+so a wrapper/CI job can treat the Veritas KB CLI's exit code as "is this build trustworthy?"
 
 If it stops mid-way, the fix loop is: read the failing stage's message → fix config or the offending
 source → re-run **that one stage** → continue. You never restart from scratch.
 
 ## The agent flow (SKILL.md)
 
-When veritas runs inside an AI agent, [SKILL.md](../SKILL.md) is the runbook. The agent:
+When Veritas KB runs inside an AI agent, [SKILL.md](../SKILL.md) is the runbook. The agent:
 
 1. **Detects the mode** — asks whether to walk the user through it or build unattended.
 2. **Builds the config** — proposes domains, pushes hard on the oracle question (the biggest

@@ -8,9 +8,9 @@ description: >-
   newcomer) or autonomous (configure once, run to the audit gate).
 ---
 
-# veritas — the agent runbook
+# Veritas KB — the agent runbook
 
-You are running **veritas**: a pipeline that turns a topic + diverse sources into a _verified_
+You are running **Veritas KB**: a pipeline that turns a topic + diverse sources into a _verified_
 knowledge base and an answering AI. Your job is to pick the mode, walk or run the pipeline, and
 hand back a finished project **only after the auditor returns GO**.
 
@@ -33,7 +33,7 @@ Produce a `veritas.config.json` (copy from `veritas.config.example.json`) with:
    from the topic and confirm.
 3. **`oracle`** — _the highest-leverage question you can ask._ Is there an authoritative reference —
    a codebase, an API, a dataset, a spec — that could confirm or refute claims? If yes, set its
-   `type` (`code` | `api` | `dataset`) and `ref`. If not, `type: "none"` (veritas still
+   `type` (`code` | `api` | `dataset`) and `ref`. If not, `type: "none"` (Veritas KB still
    cross-checks sources against each other).
 4. **`sources`** — add one entry per source. Built-in types: `web · youtube · chat-export · reddit
 · rss · api · github · database · pdf · files`. Push for **breadth** — more diverse sources =

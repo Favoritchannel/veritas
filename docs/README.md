@@ -1,4 +1,4 @@
-# Documentation
+# Veritas KB documentation
 
 ## Start here
 

@@ -1,7 +1,7 @@
 # Source modules
 
 A **source** is where raw material comes from. Each source is one entry in your config's `sources`
-array and maps to one module in `src/stages/collect/`. veritas ships ten; adding your own is one
+array and maps to one module in `src/stages/collect/`. Veritas KB ships ten; adding your own is one
 small file.
 
 ## The contract

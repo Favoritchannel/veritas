@@ -1,6 +1,6 @@
 # Security, prompt injection, and abuse prevention
 
-This document is a deployment blueprint for a public, domain-specific answering service built with veritas. It covers
+This document is a deployment blueprint for a public, domain-specific answering service built with Veritas KB. It covers
 prompt injection, off-topic proxy abuse, hallucination, data poisoning, tool misuse, data leakage, spam, and denial of
 wallet.
 

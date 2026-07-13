@@ -1,6 +1,6 @@
-# Contributing to veritas
+# Contributing to Veritas KB
 
-Thank you for helping improve veritas. This project welcomes focused bug fixes, tests, documentation, security
+Thank you for helping improve Veritas KB. This project welcomes focused bug fixes, tests, documentation, security
 hardening, source connectors, and evidence-model improvements.
 
 ## Before you start

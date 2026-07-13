@@ -1,6 +1,6 @@
 # Production roadmap
 
-This roadmap describes how to evolve veritas from a compact reference implementation into a dependable,
+This roadmap describes how to evolve Veritas KB from a compact reference implementation into a dependable,
 security-conscious knowledge platform. It is deliberately domain-neutral: the same quality bar should apply to
 product documentation, research, operations, education, policy, technical communities, and other focused knowledge
 systems.
@@ -35,7 +35,7 @@ Known gaps that drive this roadmap:
 
 The production promise should be narrow and testable:
 
-> Given approved sources and explicit domain policy, veritas produces inspectable claims with evidence, answers only
+> Given approved sources and explicit domain policy, Veritas KB produces inspectable claims with evidence, answers only
 > when retrieved evidence supports an answer, exposes uncertainty and contradiction, and blocks publication when its
 > configured quality gates fail.
 
@@ -350,7 +350,7 @@ P2 is modular. Projects should adopt only the capabilities their threat model an
   reviews;
 - governance files and process: `CONTRIBUTING`, `CODEOWNERS`, code of conduct, ADRs, support matrix, deprecation
   policy, release train, and responsible disclosure SLAs;
-- a public benchmark comparing veritas with plain RAG baselines on grounding, abstention, provenance, contradiction
+- a public benchmark comparing Veritas KB with plain RAG baselines on grounding, abstention, provenance, contradiction
   handling, and reviewed discovery precision.
 
 P2 acceptance:

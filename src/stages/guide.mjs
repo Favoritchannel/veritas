@@ -1,12 +1,12 @@
 // GUIDE — the hand-holding walkthrough. `veritas guide` prints an interactive-style setup checklist so a newcomer
-// knows exactly what to configure and what to do next. When veritas runs inside an agent (see SKILL.md) the agent
+// knows exactly what to configure and what to do next. When Veritas KB runs inside an agent (see SKILL.md) the agent
 // turns these steps into real questions; standalone, it prints the checklist and points at the config + docs.
 import fs from "node:fs";
 
 export function guide(configPath) {
   const has = configPath && fs.existsSync(configPath);
   console.log(`
-  veritas — guided setup
+  Veritas KB — guided setup
   ======================
 
   Goal: turn a TOPIC + diverse SOURCES into a verified knowledge base with an answering AI.

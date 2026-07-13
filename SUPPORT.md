@@ -1,6 +1,6 @@
 # Support
 
-veritas is an experimental reference implementation maintained on a best-effort basis. It does not currently have a
+Veritas KB is an experimental reference implementation maintained on a best-effort basis. It does not currently have a
 commercial support agreement or response-time guarantee.
 
 ## Where to ask
@@ -14,4 +14,4 @@ Before opening an issue, run `npm run check`, search existing issues, and reduce
 that contains no secrets or private corpus data.
 
 Questions about third-party model providers, databases, browsers, or hosting platforms should first go to that
-project's own support channel unless the issue is specific to veritas integration code.
+project's own support channel unless the issue is specific to Veritas KB integration code.

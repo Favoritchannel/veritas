@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in veritas.
+description: Report a reproducible problem in Veritas KB.
 title: "bug: "
 labels:
   - bug

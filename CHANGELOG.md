@@ -7,6 +7,8 @@ All notable project changes are documented here. The project intends to follow
 
 ### Added
 
+- The public-facing project name **Veritas KB**, while preserving `veritas` as the CLI command and `veritas-kb` as the
+  package identifier for compatibility.
 - Professional repository foundations: contribution, conduct, governance, support, release, compatibility,
   troubleshooting, and documentation-index files.
 - GitHub issue forms, pull-request template, CODEOWNERS, Dependabot configuration, and SHA-pinned workflows for CI,
@@ -18,7 +20,7 @@ All notable project changes are documented here. The project intends to follow
 - A package-content check that prevents generated output, logs, environment files, caches, and local project data from
   entering a package archive.
 
-- A concise, domain-neutral explanation of what people can build with veritas, who benefits most, and what the
+- A concise, domain-neutral explanation of what people can build with Veritas KB, who benefits most, and what the
   template does not promise.
 - [`docs/production-roadmap.md`](docs/production-roadmap.md), a prioritized P0–P2 plan covering evidence semantics,
   reproducible runs, meaningful audit gates, retrieval, ingestion, testing, CI, service operations, observability,
@@ -51,7 +53,7 @@ All notable project changes are documented here. The project intends to follow
   certification.
 - Added direct links to the security blueprint, roadmap, security policy, and changelog in the README documentation
   map.
-- Clarified that veritas is a reusable template for focused knowledge products across many domains, not a prebuilt
+- Clarified that Veritas KB is a reusable template for focused knowledge products across many domains, not a prebuilt
   knowledge base for one industry and not an automatic truth machine.
 
 ### Why

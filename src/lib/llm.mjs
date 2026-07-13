@@ -84,8 +84,8 @@ export async function chat(tier, system, user, opts = {}) {
     headers = {
       "content-type": "application/json",
       authorization: `Bearer ${key}`,
-      "HTTP-Referer": "https://github.com/veritas-kb",
-      "X-Title": "veritas",
+      "HTTP-Referer": "https://github.com/Favoritchannel/veritas",
+      "X-Title": "Veritas KB",
     };
     body = {
       model: tier.model,

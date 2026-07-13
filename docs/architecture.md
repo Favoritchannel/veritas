@@ -1,6 +1,6 @@
 # Architecture
 
-veritas is a **file-based pipeline**. Every stage reads and writes plain JSON/JSONL/Markdown in a
+Veritas KB is a **file-based pipeline**. Every stage reads and writes plain JSON/JSONL/Markdown in a
 project's `out/` directory. There is no database, no server, no hidden state — which means you can
 run the whole thing, inspect any intermediate artifact, fix it, and re-run a single stage.
 
@@ -83,7 +83,7 @@ The viewer is fully offline: three.js and 3d-force-graph are inlined into the si
 
 ## Offline / keyless behavior
 
-veritas is designed to **degrade, not fail**, when a tier has no key:
+Veritas KB is designed to **degrade, not fail**, when a tier has no key:
 
 - `collect` from `files` needs no network at all (the demo path).
 - `consolidate`, `merge`, `rag-pack`, `graph`, `audit` are pure and always run.

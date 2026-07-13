@@ -1,6 +1,6 @@
 # Verification model and current limits
 
-veritas records provenance, confidence, and a status on each claim. In the current alpha release, those statuses are
+Veritas KB records provenance, confidence, and a status on each claim. In the current alpha release, those statuses are
 **provisional prioritization signals**, not factual certifications. This document describes the implementation as it
 exists today and separates it from the stronger evidence model planned for production.
 

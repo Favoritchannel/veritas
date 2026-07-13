@@ -12,9 +12,36 @@ dependency graph. Hand-hold a newcomer step by step, or configure once and let i
 
 [Quickstart](#quickstart) · [How it works](#how-it-works) · [The truth ledger](#the-truth-ledger) ·
 [Add a source](#add-your-own-source-90-seconds) · [Guided vs autonomous](#two-ways-to-run) ·
-[Security](#security--secrets) · [Cost](#cost-model) · [Docs](docs/)
+[Security](#security--deployment-safety) · [Roadmap](docs/production-roadmap.md) · [Cost](#cost-model) · [Docs](docs/)
 
 </div>
+
+---
+
+## What you build with veritas
+
+veritas is a **reusable template**, not a hosted service and not a prebuilt knowledge base. Bring a topic, mixed
+sources, and—when available—an authoritative specification, dataset, codebase, or calculator. veritas provides the
+pipeline for turning them into an inspectable claim ledger, a cited answering assistant, candidate hidden
+connections, a dependency graph, and a release gate.
+
+It is designed for teams building a focused knowledge product in domains such as product and engineering support,
+scientific or policy research, operations, education, compliance analysis, technical communities, and any other
+field where source quality and uncertainty matter. It is most useful to a **domain expert + builder** pair: the expert
+defines what counts as evidence; the builder connects sources, models, and runtime controls.
+
+You can use the template to build:
+
+- a domain-specific assistant that answers only from approved evidence and cites it;
+- a research pipeline that separates corroborated claims, plausible claims, gaps, and contradictions;
+- an internal knowledge system spanning docs, code, tickets, APIs, databases, papers, and discussions;
+- a discovery workflow that proposes testable cross-source relationships for expert review;
+- a CI-gated knowledge runtime whose corpus, calculator, and assistant are evaluated together.
+
+veritas does **not** make model output automatically true. Its statuses, discovery candidates, and audit checks are
+decision-support signals that must be calibrated and evaluated for each domain. See the
+[production roadmap](docs/production-roadmap.md) for the path from the current reference implementation to a
+production-grade platform.
 
 ---
 
@@ -239,7 +266,7 @@ Then a `qa` block in your config turns the auditor into a functional gate over t
 `qa:drift` fails on untriaged drift — one GO/NO-GO over the knowledge base **and** its calculator **and** its assistant.
 See [docs/operating.md](docs/operating.md).
 
-## Security & secrets
+## Security & deployment safety
 
 - **Secrets live only in `.env`** (gitignored). Config references keys by env-var *name*, never value.
 - **The audit stage scans every output** for secret-like strings and fails the gate if it finds one.
@@ -247,6 +274,13 @@ See [docs/operating.md](docs/operating.md).
   gitignored — veritas is method + templates; your corpus stays yours.
 - **Autonomous mode never skips the gate.** `run --auto` ends at `audit`, which exits non-zero on
   NO-GO, so nothing downstream treats an unverified build as done.
+
+> **Important:** the current CLI is a reference implementation, not a hardened public web service. Delimiters and a
+> system prompt are not sufficient prompt-injection defenses. Before exposing an answering endpoint to untrusted
+> users, implement the layered controls in [Security, prompt-injection, and abuse prevention](docs/security-and-abuse.md):
+> authentication/session identity, topic gating, quarantined retrieval, evidence-only answers, input/output/tool
+> guardrails, least privilege, rate limits, escalating cooldowns, monitoring, red-team evals, and incident response.
+> No current technique guarantees complete prompt-injection immunity.
 
 ---
 
@@ -269,7 +303,7 @@ Re-running a single stage never re-does the others.
 
 ## Repo layout
 
-```
+```text
 veritas/
 ├─ bin/veritas.mjs              # CLI: guide · run --auto · <stage>
 ├─ src/
@@ -278,8 +312,9 @@ veritas/
 │  │  └─ collect/               # 10 pluggable source modules
 │  └─ templates/graph/          # inlined three.js + 3d-force-graph (offline viewer)
 ├─ examples/minimal/            # neutral, keyless, end-to-end demo
-├─ docs/                        # architecture · source-modules · verification · config-reference · guided-vs-autonomous · operating
+├─ docs/                        # architecture · verification · operating · security · production roadmap
 ├─ SKILL.md                     # how an agent runs veritas
+├─ SECURITY.md · CHANGELOG.md
 ├─ veritas.config.example.json · .env.example · LICENSE (MIT)
 ```
 
@@ -291,6 +326,10 @@ veritas/
 - [Config reference](docs/config-reference.md) — every field, every default.
 - [Guided vs autonomous](docs/guided-vs-autonomous.md) — the two operating modes + the agent flow.
 - [Operating](docs/operating.md) — the audit gate, health-ping, and re-running stages.
+- [Security, prompt injection, and abuse prevention](docs/security-and-abuse.md) — threat model and deployment blueprint.
+- [Production roadmap](docs/production-roadmap.md) — prioritized work, quality gates, and definition of done.
+- [Security policy](SECURITY.md) — responsible vulnerability reporting.
+- [Changelog](CHANGELOG.md) — what changed and why.
 
 ## Credits
 

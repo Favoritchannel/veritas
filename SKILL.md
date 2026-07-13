@@ -87,6 +87,9 @@ the knowledge base **and** its calculator **and** its assistant — not just the
 
 - **Never put a real API key in config or in chat.** Keys live in `.env` only.
 - **Never claim a build is done on a NO-GO audit** or a failed serve smoke test.
+- **Do not present the current GO as a production security or factuality certification.** It is a
+  local pipeline gate. Before an untrusted public deployment, require the controls and release
+  criteria in `docs/security-and-abuse.md` and `docs/production-roadmap.md`.
 - **Prefer more sources over more prompting.** The truth ledger gets stronger from independent
   corroboration, not from a cleverer synthesis prompt.
 - **Re-run single stages, don't restart.** Every stage persists to `out/`.

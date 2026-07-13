@@ -1,25 +1,58 @@
 {
   "name": "veritas-kb",
   "version": "0.1.0",
-  "description": "Turn any topic + diverse sources into a verified, queryable knowledge base with an answering AI — with a truth ledger, a discovery engine, and a living dependency graph.",
+  "private": true,
+  "description": "Experimental CLI and reference implementation for provenance-aware knowledge corpora and reviewable dependency graphs.",
   "type": "module",
   "bin": {
     "veritas": "bin/veritas.mjs"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "docs/",
+    "examples/minimal/raw/facts.json",
+    "examples/minimal/veritas.config.json",
+    ".env.example",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "SKILL.md",
+    "THIRD-PARTY-NOTICES.md",
+    "veritas.config.example.json"
+  ],
   "scripts": {
     "veritas": "node bin/veritas.mjs",
     "example": "node bin/veritas.mjs run --auto examples/minimal/veritas.config.json",
-    "guide": "node bin/veritas.mjs guide"
+    "guide": "node bin/veritas.mjs guide",
+    "test": "node --test",
+    "lint": "npm run lint:code && npm run lint:markdown && npm run lint:repository && npm run format:check",
+    "lint:code": "eslint .",
+    "lint:markdown": "markdownlint-cli2 \"*.md\" \"docs/**/*.md\" \".github/**/*.md\"",
+    "lint:repository": "node scripts/check-repository.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "pack:check": "node scripts/check-package.mjs",
+    "check": "npm run lint && npm test && npm run pack:check",
+    "prepublishOnly": "npm run check"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.13.0"
   },
+  "packageManager": "npm@11.11.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Favoritchannel/veritas.git"
+  },
+  "homepage": "https://github.com/Favoritchannel/veritas#readme",
+  "bugs": {
+    "url": "https://github.com/Favoritchannel/veritas/issues"
+  },
+  "author": "Favoritchannel (https://github.com/Favoritchannel)",
   "keywords": [
     "knowledge-base",
     "rag",
     "graph-rag",
     "verification",
-    "truth",
     "provenance",
     "llm",
     "research",
@@ -28,7 +61,12 @@
   ],
   "license": "MIT",
   "dependencies": {},
-  "optionalDependencies": {
-    "playwright": "^1.40.0"
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.7.0",
+    "jsdom": "29.1.1",
+    "markdownlint-cli2": "0.23.0",
+    "mermaid": "11.16.0",
+    "prettier": "3.9.5"
   }
 }

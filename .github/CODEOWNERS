@@ -1,0 +1,11 @@
+# Default ownership
+* @Favoritchannel
+
+# Trust-sensitive surfaces
+/.github/ @Favoritchannel
+/package.json @Favoritchannel
+/package-lock.json @Favoritchannel
+/SECURITY.md @Favoritchannel
+/src/lib/schema.mjs @Favoritchannel
+/src/stages/audit.mjs @Favoritchannel
+/src/stages/verify.mjs @Favoritchannel

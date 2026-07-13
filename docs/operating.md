@@ -36,7 +36,7 @@ re-run **that stage** → continue.
 - **coverage** — at least a floor of facts exist.
 - **ledger** — every fact carries a truth status; the TRUTH ratio is reported.
 - **rag** — the corpus is non-trivial.
-- **graph** — `graph.html` rendered with content.
+- **graph** — `graph.html` exists and exceeds a minimum file size; browser rendering is not yet tested here.
 - **security** — a secret scan over every output file; any hit fails the gate.
 
 Exit code is `2` on NO-GO (unless `--soft`). A secret-scan hit is a stop-everything: find it, remove it, rotate it.
@@ -69,8 +69,8 @@ Everything is config-driven so the tool stays generic:
   non-trivial, on-topic reply.
 - **`qa.drift`** runs `cmd` and passes iff it exits `0`.
 
-Each produces `qa:calc:*`, `qa:ai:*`, `qa:drift` rows in the report and counts toward the go/no-go decision — one gate
-over the corpus, the calculator, and the AI.
+Each produces `qa:calc:*`, `qa:ai:*`, `qa:drift` rows in the report and counts toward the local go/no-go decision.
+These checks are intentionally small and do not establish production readiness.
 
 ### Calculator-backed answering (numbers from truth, prose from RAG)
 
@@ -78,8 +78,8 @@ When your knowledge corpus contains numbers that can go stale (versioned data, c
 quote them. Point the answering layer at a deterministic **calculator/oracle** for numbers and let the corpus supply
 only explanation + provenance. In veritas this is the same principle as the `oracle` in verification: the authoritative
 number comes from the oracle/calculator; retrieved docs carry a status (and, if you tag it, a live-currency marker) so
-the answer can say *how sure* and *how current* a fact is. The `qa:calc` gate above is what proves the calculator still
-returns the right numbers before you trust the AI's phrasing of them.
+the answer can say _how sure_ and _how current_ a fact is. The `qa:calc` gate above is what proves the calculator still
+matches the configured fixtures before review of the AI's phrasing.
 
 ## Serve — ask questions
 
@@ -99,7 +99,7 @@ veritas health-ping veritas.config.json --once     # single canary pass → out/
 veritas health-ping veritas.config.json            # loop on config.healthPing.intervalMinutes
 ```
 
-Set `healthPing.enabled` and a few known-answer `canaries`. Schedule `--once` on cron / Task Scheduler and read
+Add known-answer `canaries`. The current CLI does not use `healthPing.enabled`; invoke the command explicitly. Schedule
+`--once` on cron / Task Scheduler and read
 `out/health-last.json` for pass/fail. Because health-ping reuses the same `answer()` path as serve, a calculator-backed
 answer is exercised here too — so drift detection covers both the retrieval and the numbers.
-```

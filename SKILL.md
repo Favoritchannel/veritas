@@ -10,7 +10,7 @@ description: >-
 
 # veritas — the agent runbook
 
-You are running **veritas**: a pipeline that turns a topic + diverse sources into a *verified*
+You are running **veritas**: a pipeline that turns a topic + diverse sources into a _verified_
 knowledge base and an answering AI. Your job is to pick the mode, walk or run the pipeline, and
 hand back a finished project **only after the auditor returns GO**.
 
@@ -21,8 +21,8 @@ hand back a finished project **only after the auditor returns GO**.
 - **Autonomous** — the user already knows their sources, wants it built unattended, or this is a
   recurring/CI run. You configure, run `run --auto`, and report the audit result.
 
-If unsure, ask once: *"Want me to walk you through setup, or configure it and run the whole build
-unattended?"*
+If unsure, ask once: _"Want me to walk you through setup, or configure it and run the whole build
+unattended?"_
 
 ## 1. Setup (both modes)
 
@@ -31,12 +31,12 @@ Produce a `veritas.config.json` (copy from `veritas.config.example.json`) with:
 1. **`topic`** — one line.
 2. **`domains`** — the sub-areas facts split into. These become the graph's nuclei. Propose a set
    from the topic and confirm.
-3. **`oracle`** — *the highest-leverage question you can ask.* Is there an authoritative reference —
+3. **`oracle`** — _the highest-leverage question you can ask._ Is there an authoritative reference —
    a codebase, an API, a dataset, a spec — that could confirm or refute claims? If yes, set its
    `type` (`code` | `api` | `dataset`) and `ref`. If not, `type: "none"` (veritas still
    cross-checks sources against each other).
 4. **`sources`** — add one entry per source. Built-in types: `web · youtube · chat-export · reddit
-   · rss · api · github · database · pdf · files`. Push for **breadth** — more diverse sources =
+· rss · api · github · database · pdf · files`. Push for **breadth** — more diverse sources =
    more cross-checking = higher-confidence truth. If the user needs a source that isn't built in,
    write a module (see `docs/source-modules.md`) before running.
 5. **`compute`** — the tiers. Cheap model for `collect`/`vision`, strong model for `analyze`, any
@@ -75,7 +75,7 @@ the knowledge base **and** its calculator **and** its assistant — not just the
 ## 4. Serve & hand off
 
 - Sanity-check the answering AI: `node bin/veritas.mjs serve veritas.config.json --ask "<a
-  question the corpus should answer>"`. Confirm the answer is cited and status-tagged.
+question the corpus should answer>"`. Confirm the answer is cited and status-tagged.
 - Hand the user: the `out/` directory (verified ledger, `rag-corpus.jsonl`, `graph.html`,
   `audit-report.md`, `expert-report.md`, `NOVEL-FINDINGS.md`, `next-targets.md`), how to ask
   questions (`serve --ask` or `serve --repl`), and how to open the 3D graph.

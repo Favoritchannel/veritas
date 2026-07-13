@@ -8,16 +8,35 @@ export async function run(project) {
   for (const s of sources) {
     const type = s.type;
     let mod;
-    try { mod = await import(`./${type}.mjs`); } catch { project.log(`  ! no collector for source type '${type}' — skipping`); continue; }
-    if (typeof mod.collect !== "function") { project.log(`  ! collector '${type}' has no collect() — skipping`); continue; }
+    try {
+      mod = await import(`./${type}.mjs`);
+    } catch {
+      project.log(`  ! no collector for source type '${type}' — skipping`);
+      continue;
+    }
+    if (typeof mod.collect !== "function") {
+      project.log(`  ! collector '${type}' has no collect() — skipping`);
+      continue;
+    }
     try {
       const entries = await mod.collect(project, s.config || {});
-      const tagged = (entries || []).map((e) => ({ confidence: "medium", domain: project.domains[0], ...e, source: { type, ...(e.source || {}) } }));
+      const tagged = (entries || []).map((e) => ({
+        confidence: "medium",
+        domain: project.domains[0],
+        ...e,
+        source: { type, ...(e.source || {}) },
+      }));
       all.push(...tagged);
       project.log(`  ${type}: +${tagged.length} entries`);
-    } catch (e) { project.log(`  ! ${type} collector failed: ${String(e.message).slice(0, 100)}`); }
+    } catch (e) {
+      project.log(
+        `  ! ${type} collector failed: ${String(e.message).slice(0, 100)}`,
+      );
+    }
   }
   project.writeOut("raw-entries.json", all);
-  project.log(`collect: ${all.length} raw entries from ${sources.length} source(s) → raw-entries.json`);
+  project.log(
+    `collect: ${all.length} raw entries from ${sources.length} source(s) → raw-entries.json`,
+  );
   return all;
 }

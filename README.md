@@ -246,10 +246,10 @@ keys read from `.env`:
 
 ```jsonc
 "compute": {
-  "collect": { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "COLLECT_KEY" },
+  "collect": { "baseURL": "https://openrouter.ai/api/v1", "model": "google/gemini-2.5-flash-lite", "keyEnv": "COLLECT_KEY" },
   "vision":  { "baseURL": "https://openrouter.ai/api/v1", "model": "google/gemini-2.5-flash",   "keyEnv": "COLLECT_KEY" },
-  "analyze": { "baseURL": "https://api.anthropic.com/v1", "model": "claude-sonnet", "keyEnv": "ANALYZE_KEY", "compat": "anthropic" },
-  "serve":   { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "SERVE_KEY" }
+  "analyze": { "baseURL": "https://openrouter.ai/api/v1", "model": "anthropic/claude-sonnet-5", "keyEnv": "ANALYZE_KEY" },
+  "serve":   { "baseURL": "https://openrouter.ai/api/v1", "model": "openai/gpt-5-mini", "keyEnv": "SERVE_KEY" }
 }
 ```
 
@@ -257,6 +257,15 @@ Use a cheap model to **collect** at volume, a strong one to **analyze** (where q
 and any model to **serve**. Mix vendors freely. Omit keys and veritas **degrades gracefully** —
 it still runs offline: consolidation, merge, graph, and an extractive serve all work keyless (the
 bundled example proves it). See [docs/config-reference.md](docs/config-reference.md).
+
+The example uses established Google, Anthropic, and OpenAI model families available through the
+[OpenRouter model catalog](https://openrouter.ai/models). Re-check IDs, capabilities, privacy terms, data residency,
+and prices before deployment; model availability changes independently of this repository.
+
+Perplexity Sonar is intentionally not the default `serve` tier. It is designed around external search, while the
+public-service security blueprint requires answers to stay inside an approved corpus. Use a search-native model only
+in an explicitly authorized collection workflow where every returned source is captured and reviewed—not as a hidden
+fallback for evidence-only answers.
 
 ---
 

@@ -26,7 +26,7 @@ export function guide(configPath) {
      Each source is one entry in "sources". Add your own by dropping a module in
      src/stages/collect/ that exports  collect(project, cfg) => rawEntry[]  (see docs/source-modules.md).
 
-  4. COMPUTE TIERS  (provider-agnostic — deepseek/gemini/openai/anthropic/local)
+  4. COMPUTE TIERS  (provider-flexible — google/openai/anthropic/perplexity/local)
      collect = cheap extraction · vision = reads charts/images · analyze = strong synthesis/
      verification/discovery · serve = the runtime answerer. Put keys in .env (never commit).
 

@@ -1,0 +1,26 @@
+# --- secrets (NEVER commit) ---
+.env
+.env.*
+!.env.example
+
+# --- collected + generated data (a knowledge project's own data, not the tool) ---
+# The tool ships method + templates only. Any project's raw sources, built library, vector
+# store, and private exports stay local. Point a project's `out` dir anywhere and it is ignored.
+out/
+runs/
+*.veritas-out/
+raw/
+inbox/
+cache/
+vector-store/
+*.lancedb/
+
+# ...but the shipped example's tiny neutral sample data IS part of the tool (proves a fresh clone runs).
+!examples/**/raw/
+!examples/**/raw/**
+
+# --- node / os ---
+node_modules/
+npm-debug.log*
+.DS_Store
+Thumbs.db

@@ -1,0 +1,34 @@
+{
+  "name": "veritas-kb",
+  "version": "0.1.0",
+  "description": "Turn any topic + diverse sources into a verified, queryable knowledge base with an answering AI — with a truth ledger, a discovery engine, and a living dependency graph.",
+  "type": "module",
+  "bin": {
+    "veritas": "bin/veritas.mjs"
+  },
+  "scripts": {
+    "veritas": "node bin/veritas.mjs",
+    "example": "node bin/veritas.mjs run --auto examples/minimal/veritas.config.json",
+    "guide": "node bin/veritas.mjs guide"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "knowledge-base",
+    "rag",
+    "graph-rag",
+    "verification",
+    "truth",
+    "provenance",
+    "llm",
+    "research",
+    "discovery",
+    "knowledge-graph"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "optionalDependencies": {
+    "playwright": "^1.40.0"
+  }
+}

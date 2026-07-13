@@ -1,0 +1,40 @@
+{
+  "$schema": "./docs/config.schema.json",
+  "topic": "The topic your knowledge base is about (one line).",
+  "domains": ["list", "the", "sub-areas", "facts", "split", "into"],
+
+  "oracle": {
+    "type": "none",
+    "ref": "",
+    "_comment": "Optional authoritative reference to VERIFY facts against. type: 'code' (a codebase/glob), 'api' (an endpoint), 'dataset' (a json/csv), or 'none'. If set, verify cross-checks facts against it → higher-confidence TRUTH."
+  },
+
+  "sources": [
+    { "type": "web", "config": { "seeds": ["https://example.com/topic"], "maxPages": 50, "vision": true } },
+    { "type": "youtube", "config": { "ids": [], "channels": [], "transcribe": "captions-then-whisper" } },
+    { "type": "chat-export", "config": { "path": "raw/chat/*.json", "format": "generic" } },
+    { "type": "pdf", "config": { "path": "raw/papers/*.pdf" } },
+    { "type": "files", "config": { "path": "raw/docs/**/*.md" } }
+  ],
+
+  "compute": {
+    "collect": { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "COLLECT_KEY" },
+    "vision":  { "baseURL": "https://openrouter.ai/api/v1", "model": "google/gemini-2.5-flash", "keyEnv": "COLLECT_KEY" },
+    "analyze": { "baseURL": "https://api.anthropic.com/v1", "model": "claude-sonnet", "keyEnv": "ANALYZE_KEY", "compat": "anthropic" },
+    "serve":   { "baseURL": "https://openrouter.ai/api/v1", "model": "deepseek/deepseek-v4-flash", "keyEnv": "SERVE_KEY" }
+  },
+
+  "parallelism": { "waves": 3, "chunkChars": 12000 },
+  "budget": { "maxCollectDocs": 500, "maxAnalyzeTokens": null },
+  "language": "en",
+
+  "privacy": { "secretsEnv": ".env", "gitignoreOutputs": true },
+
+  "out": "out",
+
+  "healthPing": {
+    "enabled": false,
+    "intervalMinutes": 1440,
+    "canaries": ["Ask one known-answer question here to detect drift."]
+  }
+}

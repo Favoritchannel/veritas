@@ -6,6 +6,13 @@ import { join } from "node:path";
 import { STATUS, deriveStatus, esc } from "../lib/schema.mjs";
 import { chatJson, asData } from "../lib/llm.mjs";
 
+export function globToRegExp(value) {
+  const normalized = String(value).replaceAll("\\", "/");
+  const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const globbed = escaped.replaceAll("\\*\\*", ".*").replaceAll("\\*", "[^/]*");
+  return new RegExp(`^${globbed}$`);
+}
+
 function oracleText(project) {
   const o = project.config.oracle || {};
   if (!o.type || o.type === "none" || !o.ref) return "";
@@ -14,14 +21,7 @@ function oracleText(project) {
     // code/dataset: read files matching the ref (glob-ish) under root, cap total size
     const abs = join(project.root, o.ref);
     const dir = abs.replace(/[\\/][^\\/]*\*.*$/, "");
-    const rx = new RegExp(
-      abs
-        .replace(/\\/g, "/")
-        .replace(/[.+^${}()|[\]]/g, "\\$&")
-        .replace(/\*\*/g, " ")
-        .replace(/\*/g, "[^/]*")
-        .replace(/ /g, ".*") + "$",
-    );
+    const rx = globToRegExp(abs);
     const out = [];
     let total = 0;
     const walk = (d) => {

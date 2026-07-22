@@ -34,7 +34,13 @@ function retrieve({ docs, df, N }, query, k = 8) {
     for (const t of q)
       if (set.has(t)) s += Math.log(1 + N / (1 + (df.get(t) || 0)));
     const boost =
-      d.status === "TRUTH" ? 1.15 : d.status === "CONTRADICTED" ? 0.9 : 1;
+      d.status === "TRUTH"
+        ? 1.15
+        : d.status === "CONTRADICTED"
+          ? 0.9
+          : d.status === "DISPUTED"
+            ? 0.85
+            : 1;
     return { d, s: s * boost };
   });
   return scored
@@ -61,7 +67,7 @@ async function answer(project, corpus, question) {
     )
     .join("\n");
   if (!tier) return `(extractive — no serve tier configured)\n\n${context}`;
-  const sys = `You answer questions about "${project.config.topic}" ONLY from the retrieved facts below. Cite the [n] you use. Respect the truth status: prefer TRUTH, flag PLAUSIBLE/NEEDS-VERIFICATION as tentative, and warn on CONTRADICTED. If the facts do not answer, say so. In ${project.language}.`;
+  const sys = `You answer questions about "${project.config.topic}" ONLY from the retrieved facts below. Cite the [n] you use. Respect the truth status: prefer TRUTH, flag PLAUSIBLE/NEEDS-VERIFICATION as tentative, and warn on CONTRADICTED. On DISPUTED facts, present BOTH sides with their sources by name ("source A says X, source B says Y") and state plainly that the question is unresolved — never pick a winner yourself. Facts marked human-reviewed outrank derived ones. If the facts do not answer, say so. In ${project.language}.`;
   const { text } = await chat(
     tier,
     sys,

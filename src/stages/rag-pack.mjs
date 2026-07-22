@@ -13,8 +13,12 @@ export async function run(project) {
     if ((m.breakpoints || []).length)
       parts.push(`Breakpoints: ${m.breakpoints.join("; ")}.`);
     if (m.note) parts.push(m.note);
+    if (m.override)
+      parts.push(
+        `Human review: ${m.override.action} by ${m.override.by || "reviewer"}.`,
+      );
     docs.push({
-      id: `fact-${m.domain}-${i}`,
+      id: m.id || `fact-${m.domain}-${i}`,
       type: "fact",
       domain: m.domain,
       status: m.status,
@@ -22,6 +26,7 @@ export async function run(project) {
       hidden: !!m.hidden,
       text: parts.join(" "),
       sources: m.sources || [],
+      ...(m.override ? { override: m.override } : {}),
     });
   });
   (Array.isArray(novel) ? novel : []).forEach((f, i) =>

@@ -23,6 +23,7 @@
   "scripts": {
     "veritas": "node bin/veritas.mjs",
     "example": "node bin/veritas.mjs run --auto examples/minimal/veritas.config.json",
+    "demo": "node bin/veritas.mjs run --auto examples/minimal/veritas.config.json && node -e \"console.log('\\nConflicts found by the pipeline: see examples/minimal/out/CONFLICTS.md (keyed run) or examples/minimal/expected-out/CONFLICTS.md (pre-baked)')\"",
     "guide": "node bin/veritas.mjs guide",
     "test": "node --test",
     "lint": "npm run lint:code && npm run lint:markdown && npm run lint:repository && npm run format:check",

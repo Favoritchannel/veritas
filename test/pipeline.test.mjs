@@ -17,7 +17,10 @@ test("the keyless example completes in an isolated path", () => {
   const project = path.join(temporaryRoot, "minimal project");
   fs.cpSync(fixture, project, {
     recursive: true,
-    filter: (source) => !source.includes(`${path.sep}out`),
+    // never copy generated output or local secrets — a keyless smoke test must stay keyless
+    filter: (source) =>
+      !source.includes(`${path.sep}out`) &&
+      !path.basename(source).startsWith(".env"),
   });
 
   try {
@@ -25,7 +28,13 @@ test("the keyless example completes in an isolated path", () => {
     const result = spawnSync(process.execPath, [cli, "run", "--auto", config], {
       cwd: root,
       encoding: "utf8",
-      env: { ...process.env, ANALYZE_KEY: "", COLLECT_KEY: "", SERVE_KEY: "" },
+      env: {
+        ...process.env,
+        ANALYZE_KEY: "",
+        COLLECT_KEY: "",
+        SERVE_KEY: "",
+        OPENROUTER_API_KEY: "",
+      },
       timeout: 30_000,
     });
     assert.equal(result.status, 0, result.stderr || result.stdout);

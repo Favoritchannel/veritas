@@ -72,15 +72,15 @@ Most "chat with your docs" tools do three things badly:
 Veritas KB takes a different approach: **represent a fact as a claim with provenance and a provisional status, expose the
 current rule that produced that status, and show where evidence is still weak.**
 
-| Capability              | Retrieval-only baseline         | Veritas KB reference workflow                                              |
-| ----------------------- | ------------------------------- | -------------------------------------------------------------------------- |
-| Claim status            | chunks are usually unclassified | provisional `TRUTH · PLAUSIBLE · NEEDS-VERIFICATION · CONTRADICTED` labels |
-| Provenance              | document-level metadata         | source references carried into claim artifacts                             |
-| Cross-checking          | outside retrieval               | source-count rules plus an optional oracle path                            |
-| Candidate relationships | retrieved only when written     | a `discover` stage proposes relationships for review                       |
-| Readiness signal        | application-specific            | a local structural audit and `next-targets.md`                             |
-| Visual output           | application-specific            | a self-contained 3D dependency graph                                       |
-| Model endpoints         | framework-specific              | OpenAI-compatible and Anthropic-compatible HTTP shapes                     |
+| Capability              | Retrieval-only baseline         | Veritas KB reference workflow                                                         |
+| ----------------------- | ------------------------------- | ------------------------------------------------------------------------------------- |
+| Claim status            | chunks are usually unclassified | provisional `TRUTH · PLAUSIBLE · NEEDS-VERIFICATION · DISPUTED · CONTRADICTED` labels |
+| Provenance              | document-level metadata         | source references carried into claim artifacts                                        |
+| Cross-checking          | outside retrieval               | source-count rules, expert-conflict detection, plus an optional oracle path           |
+| Candidate relationships | retrieved only when written     | a `discover` stage proposes relationships for review                                  |
+| Readiness signal        | application-specific            | a local structural audit and `next-targets.md`                                        |
+| Visual output           | application-specific            | a self-contained 3D dependency graph                                                  |
+| Model endpoints         | framework-specific              | OpenAI-compatible and Anthropic-compatible HTTP shapes                                |
 
 ### Is this just another RAG / GraphRAG tool?
 
@@ -104,6 +104,10 @@ cd veritas
 npm ci --ignore-scripts
 npm run example          # build local demo artifacts → examples/minimal/out/
 ```
+
+The example includes two experts who **contradict each other** on dose, temperature and timing —
+Veritas detects the clashes, marks both sides `DISPUTED`, and names who said what in
+`CONFLICTS.md`. See [examples/minimal/DEMO.md](examples/minimal/DEMO.md) and the [ROADMAP](ROADMAP.md).
 
 That single command runs the full pipeline on a tiny neutral corpus (espresso brewing) and
 produces a provisional claim ledger, a retrieval corpus, a 3D graph artifact, and a local structural audit report.
@@ -182,7 +186,8 @@ The core idea. Each fact carries **provenance + confidence + a status**:
 | **`TRUTH`**              | Legacy current-rule label: high confidence, three medium-confidence source references, or an oracle-confirmed comparison. It is not proof. |
 | **`PLAUSIBLE`**          | Reasonable and uncontradicted, but not independently confirmed.                                                                            |
 | **`NEEDS-VERIFICATION`** | Low confidence or single weak source — collect more before relying on it.                                                                  |
-| **`CONTRADICTED`**       | Sources or the oracle disagree — surfaced, never silently dropped.                                                                         |
+| **`DISPUTED`**           | Two credible sources directly disagree (e.g. two experts) — both claims kept, named in `CONFLICTS.md`, unresolved until adjudicated.       |
+| **`CONTRADICTED`**       | Refuted by the oracle or an authority — surfaced, never silently dropped.                                                                  |
 
 Status is derived by code from the fact's confidence, source-reference count, and (if configured) an oracle
 comparison. The current version does **not** establish that source references are independent and does not require

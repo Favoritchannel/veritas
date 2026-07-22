@@ -1,0 +1,1572 @@
+{
+  "tally": {
+    "PLAUSIBLE": 10,
+    "TRUTH": 46,
+    "DISPUTED": 8,
+    "NEEDS-VERIFICATION": 1
+  },
+  "gaps": [],
+  "items": [
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "roast_level"
+      ],
+      "affects": [
+        "grind_size",
+        "extraction_rate"
+      ],
+      "breakpoints": [],
+      "statement": "Darker roasts have higher solubility and extract faster than lighter roasts",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Solubility increases with roast darkness; faster extraction suggests coarser grind adjustment",
+      "sources": [
+        "roasting"
+      ],
+      "id": "f-zd4jgb",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "roast_level",
+        "solubility"
+      ],
+      "affects": [
+        "grind_size"
+      ],
+      "breakpoints": [],
+      "statement": "Darker roasts often require a coarser grind to manage faster extraction",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Practical adjustment to compensate for increased solubility in dark roasts",
+      "sources": [
+        "roasting"
+      ],
+      "id": "f-hoadsc",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "flow_stability",
+        "extraction_consistency"
+      ],
+      "breakpoints": [],
+      "statement": "Fresh beans off-gas CO2 after roasting, causing gushing and unstable flow",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "CO2 degassing is most pronounced in the first few days post-roast",
+      "sources": [
+        "degassing"
+      ],
+      "id": "f-1n2epd6",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "origin",
+        "process_type"
+      ],
+      "affects": [
+        "flavor_potential"
+      ],
+      "breakpoints": [],
+      "statement": "Bean origin and processing method (washed vs natural) determine the flavor ceiling",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Brewing technique can only reveal inherent notes, not create new ones",
+      "sources": [
+        "green-coffee"
+      ],
+      "id": "f-1tk6mio",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "degassing",
+        "flow_stability"
+      ],
+      "breakpoints": [
+        "7 days"
+      ],
+      "statement": "Beans should rest at least 7 days after roasting before use",
+      "values": "≥7 days",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Minimum rest period to allow CO2 degassing and achieve stable extraction",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-1jthtwv",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "flavor",
+        "freshness"
+      ],
+      "breakpoints": [
+        "30 days"
+      ],
+      "statement": "Beans should be used within one month of roasting",
+      "values": "≤30 days",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Upper bound for optimal flavor retention",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-1ucf4h",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "extraction_quality",
+        "flavor"
+      ],
+      "breakpoints": [
+        "7 days",
+        "21 days"
+      ],
+      "statement": "Optimal espresso window is 7 to 21 days after roasting",
+      "values": "7–21 days",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Before day 7: excessive gassing; after day 21: flavor degradation",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1rvtnvx",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "flow_stability",
+        "extraction_consistency"
+      ],
+      "breakpoints": [
+        "7 days"
+      ],
+      "statement": "Beans before 7 days post-roast are too gassy for optimal espresso",
+      "values": "<7 days",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "CO2 degassing causes gushing and unstable flow",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1l0v3kr",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [
+        "days_post_roast"
+      ],
+      "affects": [
+        "flavor"
+      ],
+      "breakpoints": [
+        "21 days"
+      ],
+      "statement": "Beans after 21 days post-roast show flavor degradation",
+      "values": ">21 days",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Beans go flat; flavor becomes muted",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1cm0y1v",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "beans",
+      "dependsOn": [],
+      "affects": [
+        "dose",
+        "extraction"
+      ],
+      "breakpoints": [],
+      "statement": "Standard double espresso dose is 18 grams of coffee",
+      "values": "18 g",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Reference dose for double espresso preparation",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-p8pa5x",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-1ruqi0y",
+          "withId": "f-y5u62r",
+          "reason": "One claims 18 grams is standard while the other recommends 20 grams for double espresso dose."
+        }
+      ]
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [],
+      "affects": [
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Sour shot indicates under-extraction",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Diagnostic indicator of insufficient soluble compound dissolution",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-17vkx4e",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "grind size"
+      ],
+      "affects": [
+        "extraction yield",
+        "flow resistance"
+      ],
+      "breakpoints": [],
+      "statement": "Grinding finer increases extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Increases surface area and flow resistance",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-1s38cp3",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "water temperature"
+      ],
+      "affects": [
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Raising water temperature increases extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Higher temperature accelerates solubility",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-1svjtq1",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [],
+      "affects": [
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Bitter shot indicates over-extraction",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Diagnostic indicator of excessive soluble compound dissolution",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-1v3vpsl",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "grind size"
+      ],
+      "affects": [
+        "extraction yield",
+        "flow resistance"
+      ],
+      "breakpoints": [],
+      "statement": "Grinding coarser decreases extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Decreases surface area and flow resistance",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-169t8hy",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "water temperature"
+      ],
+      "affects": [
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Lowering water temperature decreases extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Lower temperature reduces solubility rate",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-1axlvr5",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "TDS",
+        "beverage mass",
+        "dry dose"
+      ],
+      "affects": [
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Extraction yield is calculated as TDS × beverage mass ÷ dry dose",
+      "values": null,
+      "formula": "extraction_yield = (TDS × beverage_mass) / dry_dose",
+      "hidden": false,
+      "confidence": "high",
+      "note": "Standard SCA measurement method",
+      "sources": [
+        "sca-standard"
+      ],
+      "id": "f-xpqqsw",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "extraction yield"
+      ],
+      "affects": [],
+      "breakpoints": [
+        "18%",
+        "22%"
+      ],
+      "statement": "Target extraction yield for espresso is 18–22 percent",
+      "values": "18–22%",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "SCA standard target range for balanced flavor",
+      "sources": [
+        "sca-standard"
+      ],
+      "id": "f-1n8aty",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [],
+      "affects": [
+        "puck density",
+        "flow resistance"
+      ],
+      "breakpoints": [],
+      "statement": "Dose is the mass of dry coffee in the basket",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Fundamental input variable",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-bcqyxi",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "dose"
+      ],
+      "affects": [
+        "puck density",
+        "flow resistance",
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Higher dose in a fixed basket raises puck density and flow resistance",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Mechanical consequence of increased mass in fixed volume",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-jwxinq",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "beverage mass",
+        "dose"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Brew ratio is beverage mass divided by dose",
+      "values": null,
+      "formula": "brew_ratio = beverage_mass / dose",
+      "hidden": false,
+      "confidence": "high",
+      "note": "Standard metric for espresso strength",
+      "sources": [
+        "sca-standard"
+      ],
+      "id": "f-swogz",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "brew ratio"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Typical modern espresso brew ratio is 1:2",
+      "values": "1:2",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Contemporary standard starting point",
+      "sources": [
+        "sca-standard",
+        "interview:Jonas"
+      ],
+      "id": "f-lgpvv9",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [],
+      "affects": [
+        "extraction yield",
+        "flavor balance"
+      ],
+      "breakpoints": [],
+      "statement": "Channeling is water finding a low-resistance path through the puck, causing uneven and lower extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Primary defect in puck preparation",
+      "sources": [
+        "puck-prep"
+      ],
+      "id": "f-w3f8u0",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "puck prep"
+      ],
+      "affects": [
+        "channeling",
+        "extraction yield"
+      ],
+      "breakpoints": [],
+      "statement": "Distributing and tamping level (puck prep) reduces channeling by making flow resistance uniform across the puck",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Mitigation technique for uneven extraction",
+      "sources": [
+        "puck-prep"
+      ],
+      "id": "f-hz6i2z",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "grind size",
+        "dose",
+        "pressure"
+      ],
+      "affects": [
+        "shot time"
+      ],
+      "breakpoints": [],
+      "statement": "Shot time is an output of grind, dose, and pressure, not a target to dial directly",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Conceptual clarification: shot time is a consequence, not a control lever",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-1wemjl5",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "shot time"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Chasing a fixed shot time by feel hides the real control levers (grind, dose, pressure)",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Methodological warning against time-based dialing",
+      "sources": [
+        "extraction-theory"
+      ],
+      "id": "f-hg9cg8",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "brew ratio"
+      ],
+      "affects": [
+        "TDS"
+      ],
+      "breakpoints": [],
+      "statement": "Strength (TDS) is driven mainly by brew ratio",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Primary independent axis of espresso control",
+      "sources": [
+        "control-chart"
+      ],
+      "id": "f-191hsc4",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "extraction yield"
+      ],
+      "affects": [
+        "flavor balance"
+      ],
+      "breakpoints": [],
+      "statement": "Flavor balance is driven mainly by extraction yield",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Primary independent axis of espresso control; distinct from strength",
+      "sources": [
+        "control-chart"
+      ],
+      "id": "f-d9kydj",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "TDS",
+        "extraction yield"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Strength (TDS) and flavor balance (extraction yield) are two independent axes often conflated",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Conceptual framework clarification",
+      "sources": [
+        "control-chart"
+      ],
+      "id": "f-1tu31h8",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "brew ratio"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "A 1:2 brew ratio is the right starting point for most beans",
+      "values": "1:2",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Recommended baseline for dialing in",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-n8fobx",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "brew ratio",
+        "dose",
+        "extraction yield"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Scale extraction yield from whatever dose is used, starting from 1:2 brew ratio",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Flexible approach to dose variation",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-oprp4j",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "shot time"
+      ],
+      "affects": [
+        "flavor profile"
+      ],
+      "breakpoints": [
+        "30 seconds"
+      ],
+      "statement": "Doubles should run long: over 30 seconds, usually 32 to 38 seconds",
+      "values": "32–38 seconds",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Slower extractions bring out sweetness",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-1wpbp7h",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-19z32qu",
+          "withId": "f-1miofd8",
+          "reason": "Both specify extraction time ranges for double espresso but give incompatible durations (32-38 seconds vs 25-30 seconds)."
+        },
+        {
+          "conflictId": "c-1yxlw33",
+          "withId": "f-uftebe",
+          "reason": "Maria recommends 25–30 seconds while Jonas recommends 32–38 seconds for the same double espresso shot time."
+        }
+      ]
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "shot time"
+      ],
+      "affects": [
+        "flavor profile"
+      ],
+      "breakpoints": [],
+      "statement": "Slower espresso extractions bring out sweetness that fast shots miss",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Flavor consequence of extended contact time",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-ysee5t",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "brew ratio"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "Target brew ratio for a double espresso is 1:2",
+      "values": "1:2",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Specific application of standard ratio",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-st67m4",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "dose",
+        "brew ratio",
+        "beverage mass"
+      ],
+      "affects": [],
+      "breakpoints": [],
+      "statement": "For a double espresso, 18 grams in should give about 36 grams out at 1:2 ratio",
+      "values": "dose: 18g, beverage mass: 36g",
+      "formula": "36 = 18 × 2",
+      "hidden": false,
+      "confidence": "high",
+      "note": "Concrete example of 1:2 brew ratio application",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-twplkx",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-1rosry2",
+          "withId": "f-y5u62r",
+          "reason": "One specifies 18 grams input while the other recommends 20 grams for double espresso dose."
+        }
+      ]
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "shot time"
+      ],
+      "affects": [
+        "flavor balance"
+      ],
+      "breakpoints": [
+        "25 seconds",
+        "30 seconds"
+      ],
+      "statement": "Extraction time for a balanced double espresso is 25 to 30 seconds, measured from the first drop",
+      "values": "25–30 seconds",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Time window for balanced extraction; differs from Jonas's 32–38 second recommendation",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1miofd8",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-yhx8j4",
+          "withId": "f-uftebe",
+          "reason": "They give incompatible time windows for the same parameter: 25-30 seconds versus 32-38 seconds for balanced double espresso."
+        },
+        {
+          "conflictId": "c-19z32qu",
+          "withId": "f-1wpbp7h",
+          "reason": "Both specify extraction time ranges for double espresso but give incompatible durations (32-38 seconds vs 25-30 seconds)."
+        }
+      ]
+    },
+    {
+      "domain": "extraction",
+      "dependsOn": [
+        "shot time"
+      ],
+      "affects": [
+        "flavor balance"
+      ],
+      "breakpoints": [],
+      "statement": "Shot time window for balanced double espresso: 25–30 seconds (Maria) vs. 32–38 seconds (Jonas)",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "CONFLICT: Two independent expert sources disagree on optimal extraction duration",
+      "sources": [
+        "interview:Maria",
+        "interview:Jonas"
+      ],
+      "id": "f-uftebe",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-yhx8j4",
+          "withId": "f-1miofd8",
+          "reason": "They give incompatible time windows for the same parameter: 25-30 seconds versus 32-38 seconds for balanced double espresso."
+        },
+        {
+          "conflictId": "c-1yxlw33",
+          "withId": "f-1wpbp7h",
+          "reason": "Maria recommends 25–30 seconds while Jonas recommends 32–38 seconds for the same double espresso shot time."
+        }
+      ]
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "grind_size"
+      ],
+      "affects": [
+        "extraction_yield"
+      ],
+      "breakpoints": [],
+      "statement": "Finer grind size increases extraction yield by raising the coffee surface area exposed to water",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Mechanism: increased surface area contact with water",
+      "sources": [
+        "barista-guide"
+      ],
+      "id": "f-1lw1v1e",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "grind_size"
+      ],
+      "affects": [
+        "flow_resistance",
+        "brew_pressure",
+        "shot_duration"
+      ],
+      "breakpoints": [],
+      "statement": "Finer grind size increases flow resistance, which raises brew pressure and slows the shot",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Mechanism: particle size reduces void space in puck",
+      "sources": [
+        "barista-guide"
+      ],
+      "id": "f-z373ol",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "basket_type",
+        "espresso_type"
+      ],
+      "affects": [
+        "dose",
+        "distribution_tolerance"
+      ],
+      "breakpoints": [],
+      "statement": "Use a 20 gram dose for double espresso, as modern precision baskets are built for it and the bigger bed forgives small distribution errors",
+      "values": "20g",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Applies to modern precision baskets; larger bed provides error margin",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-y5u62r",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-1ruqi0y",
+          "withId": "f-p8pa5x",
+          "reason": "One claims 18 grams is standard while the other recommends 20 grams for double espresso dose."
+        },
+        {
+          "conflictId": "c-1rosry2",
+          "withId": "f-twplkx",
+          "reason": "One specifies 18 grams input while the other recommends 20 grams for double espresso dose."
+        }
+      ]
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "taste_profile"
+      ],
+      "affects": [
+        "grind_size"
+      ],
+      "breakpoints": [],
+      "statement": "If the shot is sour, grind finer",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Diagnostic rule: sourness indicates under-extraction",
+      "sources": [
+        "interview:Jonas",
+        "interview:Maria"
+      ],
+      "id": "f-1nezgo4",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "bed_distribution",
+        "bed_levelness"
+      ],
+      "affects": [
+        "channeling_risk"
+      ],
+      "breakpoints": [],
+      "statement": "Tamping pressure is overrated; a level, evenly distributed bed is what actually prevents channeling",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Prioritizes distribution and levelness over tamping force magnitude",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-3vp9fd",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "bed_distribution",
+        "bed_levelness",
+        "tamp_force"
+      ],
+      "affects": [
+        "channeling_risk",
+        "extraction_uniformity"
+      ],
+      "breakpoints": [],
+      "statement": "Distribution matters more than tamping pressure; level the bed with a light tap, then tamp with consistent, moderate force",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Prescriptive technique: light tap for leveling, then moderate consistent tamp",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-mzmnbl",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "grind",
+      "dependsOn": [
+        "taste_profile",
+        "grind_size"
+      ],
+      "affects": [
+        "grind_size"
+      ],
+      "breakpoints": [],
+      "statement": "If the shot tastes sour, grind finer and keep everything else fixed, because the grind is too coarse",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Diagnostic rule with isolation principle: adjust only grind when troubleshooting sourness",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1q50jyo",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [],
+      "affects": [
+        "extraction_rate",
+        "flow_dynamics"
+      ],
+      "breakpoints": [],
+      "statement": "Pump targets approximately 9 bar of brew pressure at the puck for classic espresso",
+      "values": "9 bar",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Standard espresso machine specification",
+      "sources": [
+        "machine-basics"
+      ],
+      "id": "f-17e8j54",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [],
+      "affects": [
+        "channeling",
+        "extraction_uniformity"
+      ],
+      "breakpoints": [],
+      "statement": "Pre-infusion applies low pressure first to wet the puck evenly, reducing channeling before full pressure is applied",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Technique to improve extraction consistency",
+      "sources": [
+        "machine-basics"
+      ],
+      "id": "f-1deqpjt",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "water_hardness",
+        "maintenance_frequency"
+      ],
+      "affects": [
+        "brew_pressure",
+        "heating_stability",
+        "group_flow"
+      ],
+      "breakpoints": [],
+      "statement": "Scale buildup from hard water lowers the machine's effective heating capacity and clogs the group, reducing brew pressure over time",
+      "values": null,
+      "formula": null,
+      "hidden": true,
+      "confidence": "medium",
+      "note": "Cumulative degradation effect; threshold depends on water mineral content",
+      "sources": [
+        "machine-maintenance"
+      ],
+      "id": "f-dz7ahy",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "basket_size",
+        "puck_height"
+      ],
+      "affects": [
+        "channeling",
+        "extraction_uniformity"
+      ],
+      "breakpoints": [],
+      "statement": "Basket size sets the headspace above the puck; excessive headspace allows the puck to expand and channel",
+      "values": null,
+      "formula": null,
+      "hidden": true,
+      "confidence": "low",
+      "note": "Relationship between headspace and puck expansion is not quantified",
+      "sources": [
+        "basket-guide"
+      ],
+      "id": "f-36j57x",
+      "status": "NEEDS-VERIFICATION",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "roast_level",
+        "brew_temperature"
+      ],
+      "affects": [
+        "extraction_yield",
+        "flavor_profile"
+      ],
+      "breakpoints": [
+        "93 °C (underextraction threshold)"
+      ],
+      "statement": "For medium roasts, set the machine to 93–94 degrees Celsius; below 93°C underextraction occurs and the cup tastes hollow",
+      "values": "93–94 °C",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Specific guidance from experienced barista; conflicts with observation 8",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-1wedl8n",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-9smsy9",
+          "withId": "f-ypz1m2",
+          "reason": "They specify different brew temperatures for medium roasts: 93-94°C versus 92°C."
+        }
+      ]
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "roast_level",
+        "brew_temperature"
+      ],
+      "affects": [
+        "extraction_yield",
+        "flavor_profile"
+      ],
+      "breakpoints": [],
+      "statement": "For medium roasts, brew temperature should be 92 degrees Celsius",
+      "values": "92 °C",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Conflicts with observation 5 (Jonas: 93–94°C); both sources high confidence",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-ypz1m2",
+      "status": "DISPUTED",
+      "engineGap": false,
+      "conflicts": [
+        {
+          "conflictId": "c-9smsy9",
+          "withId": "f-1wedl8n",
+          "reason": "They specify different brew temperatures for medium roasts: 93-94°C versus 92°C."
+        }
+      ]
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [],
+      "affects": [
+        "brew_temperature",
+        "thermal_stability"
+      ],
+      "breakpoints": [],
+      "statement": "Purge the group head before every shot for temperature stability",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Routine maintenance practice; aligns with observation 9",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-hp4zzv",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [],
+      "affects": [
+        "brew_temperature",
+        "thermal_stability",
+        "residue_removal"
+      ],
+      "breakpoints": [],
+      "statement": "Purge the group head for one to two seconds before locking in the portafilter to clear old grounds and stabilize temperature",
+      "values": "1–2 seconds",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Specific timing guidance; consistent with observation 6",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-1kor1z1",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "usage_volume",
+        "maintenance_schedule"
+      ],
+      "affects": [
+        "flavor_quality",
+        "group_cleanliness"
+      ],
+      "breakpoints": [],
+      "statement": "Backflush the group with detergent once a week on a busy bar because rancid oils in the group ruin every shot that passes through it",
+      "values": "weekly",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Preventive maintenance for high-volume operation",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-19so8dl",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "machine",
+      "dependsOn": [
+        "maintenance_schedule"
+      ],
+      "affects": [
+        "flavor_quality",
+        "off_flavors"
+      ],
+      "breakpoints": [],
+      "statement": "Clean the group head gasket weekly because old coffee oils are the most common cause of off-flavors people blame on beans",
+      "values": "weekly",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Root cause identification: maintenance issue misattributed to bean quality",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-s7rnrd",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "milk",
+      "dependsOn": [],
+      "affects": [
+        "microfoam quality",
+        "latte art capability"
+      ],
+      "breakpoints": [],
+      "statement": "Milk steaming for espresso involves two sequential phases: air introduction (stretching) followed by heating and folding to build glossy microfoam",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Describes the mechanical process of steam wand technique",
+      "sources": [
+        "latte-art"
+      ],
+      "id": "f-1cmzwtx",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "milk",
+      "dependsOn": [
+        "temperature"
+      ],
+      "affects": [
+        "microfoam stability",
+        "milk sweetness",
+        "espresso drink quality"
+      ],
+      "breakpoints": [
+        "65°C"
+      ],
+      "statement": "Milk heated above approximately 65°C becomes scalded, causing protein breakdown and destruction of microfoam structure and sweetness",
+      "values": "65°C",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Critical temperature threshold for milk steaming",
+      "sources": [
+        "latte-art"
+      ],
+      "id": "f-baxbd3",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "milk",
+      "dependsOn": [
+        "milk fat content",
+        "milk protein content"
+      ],
+      "affects": [
+        "microfoam longevity",
+        "latte art sustainability"
+      ],
+      "breakpoints": [],
+      "statement": "Whole milk (higher fat and protein content) produces more stable microfoam and retains it longer than skim milk",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "medium",
+      "note": "Milk composition directly influences foam stability characteristics",
+      "sources": [
+        "milk-science"
+      ],
+      "id": "f-19y4d9f",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [],
+      "affects": [
+        "extraction yield",
+        "bitter compound concentration"
+      ],
+      "breakpoints": [
+        "90°C",
+        "96°C"
+      ],
+      "statement": "Higher water temperature increases extraction yield, especially of slower-dissolving bitter compounds",
+      "values": "90-96°C typical",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Temperature range specified for espresso brewing",
+      "sources": [
+        "water-chemistry"
+      ],
+      "id": "f-19r5w88",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness (calcium and magnesium)"
+      ],
+      "affects": [
+        "flavor extraction"
+      ],
+      "breakpoints": [],
+      "statement": "Water hardness increases extraction of flavor compounds",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Positive correlation between hardness and flavor extraction",
+      "sources": [
+        "water-chemistry",
+        "interview:Maria"
+      ],
+      "id": "f-1ht76qy",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness"
+      ],
+      "affects": [
+        "machine scaling",
+        "equipment longevity"
+      ],
+      "breakpoints": [
+        "4 grains per gallon"
+      ],
+      "statement": "Scale formation occurs above approximately 4 grains per gallon water hardness",
+      "values": "4 grains per gallon threshold",
+      "formula": null,
+      "hidden": true,
+      "confidence": "medium",
+      "note": "Critical threshold for scale formation; represents a hidden dependency affecting machine maintenance",
+      "sources": [
+        "water-chemistry"
+      ],
+      "id": "f-1vfdcn9",
+      "status": "PLAUSIBLE",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [],
+      "affects": [
+        "flavor profile",
+        "machine scaling risk"
+      ],
+      "breakpoints": [
+        "50 ppm",
+        "80 ppm"
+      ],
+      "statement": "Optimal water hardness for espresso is 50-80 ppm",
+      "values": "50-80 ppm",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Balances flavor extraction with scaling prevention",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-17g8r4q",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness"
+      ],
+      "affects": [
+        "flavor profile"
+      ],
+      "breakpoints": [],
+      "statement": "Very soft water produces flat espresso",
+      "values": "below optimal range",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Insufficient mineral content reduces flavor complexity",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-57zwix",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness"
+      ],
+      "affects": [
+        "machine scaling",
+        "equipment longevity"
+      ],
+      "breakpoints": [],
+      "statement": "Very hard water causes boiler scaling",
+      "values": "above optimal range",
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Excessive mineral content leads to scale buildup",
+      "sources": [
+        "interview:Maria"
+      ],
+      "id": "f-68ei8q",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness"
+      ],
+      "affects": [
+        "machine longevity",
+        "maintenance requirements"
+      ],
+      "breakpoints": [],
+      "statement": "Scale formation is the leading single cause of espresso machine failure",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Empirical observation from machine maintenance experience",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-vtsqya",
+      "status": "TRUTH",
+      "engineGap": false
+    },
+    {
+      "domain": "water",
+      "dependsOn": [
+        "water hardness"
+      ],
+      "affects": [
+        "machine longevity"
+      ],
+      "breakpoints": [],
+      "statement": "Filtered water should be used to prevent machine scaling",
+      "values": null,
+      "formula": null,
+      "hidden": false,
+      "confidence": "high",
+      "note": "Practical recommendation to mitigate scale formation",
+      "sources": [
+        "interview:Jonas"
+      ],
+      "id": "f-1kkvaik",
+      "status": "TRUTH",
+      "engineGap": false
+    }
+  ]
+}

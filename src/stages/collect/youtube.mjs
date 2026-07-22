@@ -50,6 +50,7 @@ export async function collect(project, cfg) {
           "--skip-download",
           "-o",
           join(tmp, "%(id)s.%(ext)s"),
+          "--", // ids are data, never option flags
           id,
         ],
         { stdio: "ignore", timeout: 120000 },

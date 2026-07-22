@@ -1,0 +1,84 @@
+[
+  {
+    "type": "files",
+    "ref": "barista-guide",
+    "title": "Barista Guide"
+  },
+  {
+    "type": "files",
+    "ref": "extraction-theory",
+    "title": "Extraction Theory"
+  },
+  {
+    "type": "files",
+    "ref": "sca-standard",
+    "title": "SCA Standard"
+  },
+  {
+    "type": "files",
+    "ref": "water-chemistry",
+    "title": "Water Chemistry"
+  },
+  {
+    "type": "files",
+    "ref": "machine-maintenance",
+    "title": "Machine Maintenance"
+  },
+  {
+    "type": "files",
+    "ref": "machine-basics",
+    "title": "Machine Basics"
+  },
+  {
+    "type": "files",
+    "ref": "puck-prep",
+    "title": "Puck Prep"
+  },
+  {
+    "type": "files",
+    "ref": "roasting",
+    "title": "Roasting"
+  },
+  {
+    "type": "files",
+    "ref": "degassing",
+    "title": "Degassing"
+  },
+  {
+    "type": "files",
+    "ref": "green-coffee",
+    "title": "Green Coffee"
+  },
+  {
+    "type": "files",
+    "ref": "latte-art",
+    "title": "Latte Art"
+  },
+  {
+    "type": "files",
+    "ref": "milk-science",
+    "title": "Milk Science"
+  },
+  {
+    "type": "files",
+    "ref": "basket-guide",
+    "title": "Basket Guide"
+  },
+  {
+    "type": "files",
+    "ref": "control-chart",
+    "title": "Coffee Control Chart"
+  },
+  {
+    "type": "interview",
+    "ref": "interview:Jonas",
+    "title": "raw/interviews/barista-jonas.md",
+    "expert": "Jonas"
+  },
+  {
+    "type": "interview",
+    "ref": "interview:Maria",
+    "title": "raw/interviews/barista-maria.md",
+    "expert": "Maria"
+  }
+]

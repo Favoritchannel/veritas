@@ -4,3 +4,4 @@ node_modules/
 package-lock.json
 src/templates/graph/_three.js
 src/templates/graph/_3dfg.js
+examples/minimal/expected-out/

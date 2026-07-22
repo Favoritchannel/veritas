@@ -1,0 +1,352 @@
+{
+  "conflicts": [
+    {
+      "id": "c-yhx8j4",
+      "a": "f-1miofd8",
+      "b": "f-uftebe",
+      "domain": "extraction",
+      "aStatement": "Extraction time for a balanced double espresso is 25 to 30 seconds, measured from the first drop",
+      "bStatement": "Shot time window for balanced double espresso: 25–30 seconds (Maria) vs. 32–38 seconds (Jonas)",
+      "aSources": [
+        "interview:Maria"
+      ],
+      "bSources": [
+        "interview:Maria",
+        "interview:Jonas"
+      ],
+      "reason": "They give incompatible time windows for the same parameter: 25-30 seconds versus 32-38 seconds for balanced double espresso.",
+      "detectedAt": "2026-07-22T04:07:19.865Z",
+      "resolved": false,
+      "stale": false
+    },
+    {
+      "id": "c-9smsy9",
+      "a": "f-1wedl8n",
+      "b": "f-ypz1m2",
+      "domain": "machine",
+      "aStatement": "For medium roasts, set the machine to 93–94 degrees Celsius; below 93°C underextraction occurs and the cup tastes hollow",
+      "bStatement": "For medium roasts, brew temperature should be 92 degrees Celsius",
+      "aSources": [
+        "interview:Jonas"
+      ],
+      "bSources": [
+        "interview:Maria"
+      ],
+      "reason": "They specify different brew temperatures for medium roasts: 93-94°C versus 92°C.",
+      "detectedAt": "2026-07-22T04:07:19.865Z",
+      "resolved": false,
+      "stale": false
+    },
+    {
+      "id": "c-19z32qu",
+      "a": "f-1miofd8",
+      "b": "f-1wpbp7h",
+      "domain": "extraction",
+      "aStatement": "Extraction time for a balanced double espresso is 25 to 30 seconds, measured from the first drop",
+      "bStatement": "Doubles should run long: over 30 seconds, usually 32 to 38 seconds",
+      "aSources": [
+        "interview:Maria"
+      ],
+      "bSources": [
+        "interview:Jonas"
+      ],
+      "reason": "Both specify extraction time ranges for double espresso but give incompatible durations (32-38 seconds vs 25-30 seconds).",
+      "detectedAt": "2026-07-22T04:08:22.715Z",
+      "resolved": false,
+      "stale": false
+    },
+    {
+      "id": "c-1yxlw33",
+      "a": "f-1wpbp7h",
+      "b": "f-uftebe",
+      "domain": "extraction",
+      "aStatement": "Doubles should run long: over 30 seconds, usually 32 to 38 seconds",
+      "bStatement": "Shot time window for balanced double espresso: 25–30 seconds (Maria) vs. 32–38 seconds (Jonas)",
+      "aSources": [
+        "interview:Jonas"
+      ],
+      "bSources": [
+        "interview:Maria",
+        "interview:Jonas"
+      ],
+      "reason": "Maria recommends 25–30 seconds while Jonas recommends 32–38 seconds for the same double espresso shot time.",
+      "detectedAt": "2026-07-22T04:08:22.715Z",
+      "resolved": false,
+      "stale": false
+    },
+    {
+      "id": "c-1ruqi0y",
+      "a": "f-p8pa5x",
+      "b": "f-y5u62r",
+      "domain": "beans",
+      "aStatement": "Standard double espresso dose is 18 grams of coffee",
+      "bStatement": "Use a 20 gram dose for double espresso, as modern precision baskets are built for it and the bigger bed forgives small distribution errors",
+      "aSources": [
+        "interview:Maria"
+      ],
+      "bSources": [
+        "interview:Jonas"
+      ],
+      "reason": "One claims 18 grams is standard while the other recommends 20 grams for double espresso dose.",
+      "detectedAt": "2026-07-22T04:08:22.715Z",
+      "resolved": false,
+      "stale": false
+    },
+    {
+      "id": "c-1rosry2",
+      "a": "f-twplkx",
+      "b": "f-y5u62r",
+      "domain": "extraction",
+      "aStatement": "For a double espresso, 18 grams in should give about 36 grams out at 1:2 ratio",
+      "bStatement": "Use a 20 gram dose for double espresso, as modern precision baskets are built for it and the bigger bed forgives small distribution errors",
+      "aSources": [
+        "interview:Maria"
+      ],
+      "bSources": [
+        "interview:Jonas"
+      ],
+      "reason": "One specifies 18 grams input while the other recommends 20 grams for double espresso dose.",
+      "detectedAt": "2026-07-22T04:08:22.715Z",
+      "resolved": false,
+      "stale": false
+    }
+  ],
+  "verdictCache": {
+    "f-1lw1v1e|f-1svjtq1": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both describe different methods of increasing extraction yield (temperature vs. grind size)."
+    },
+    "f-hz6i2z|f-w3f8u0": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes the channeling problem, B describes the solution to prevent it."
+    },
+    "f-19y4d9f|f-baxbd3": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses temperature limits for milk, B compares different milk types' foaming properties."
+    },
+    "f-jwxinq|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both describe different methods of increasing flow resistance (dose vs. grind size)."
+    },
+    "f-19r5w88|f-1svjtq1": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state that higher water temperature increases extraction yield, with B adding detail about bitter compounds."
+    },
+    "f-19so8dl|f-s7rnrd": {
+      "verdict": "DUPLICATE",
+      "reason": "Both recommend weekly cleaning of group head components to prevent off-flavors from rancid coffee oils."
+    },
+    "f-1kor1z1|f-s7rnrd": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses pre-shot purging procedure, B addresses weekly deep cleaning maintenance."
+    },
+    "f-1q50jyo|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "A explains the mechanical effect of finer grind, B prescribes grinding finer as a solution to sourness."
+    },
+    "f-1kor1z1|f-hp4zzv": {
+      "verdict": "DUPLICATE",
+      "reason": "Both recommend purging the group head before the shot for the same reasons (clearing grounds and temperature stability)."
+    },
+    "f-1miofd8|f-uftebe": {
+      "verdict": "CONFLICT",
+      "reason": "They give incompatible time windows for the same parameter: 25-30 seconds versus 32-38 seconds for balanced double espresso."
+    },
+    "f-1wedl8n|f-ypz1m2": {
+      "verdict": "CONFLICT",
+      "reason": "They specify different brew temperatures for medium roasts: 93-94°C versus 92°C."
+    },
+    "f-1lw1v1e|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both describe different effects of finer grind (surface area/extraction yield vs. flow resistance/pressure), which can coexist."
+    },
+    "f-1cm0y1v|f-1l0v3kr": {
+      "verdict": "COMPATIBLE",
+      "reason": "They address different ends of the freshness window (too fresh before 7 days vs. stale after 21 days)."
+    },
+    "f-1nezgo4|f-1q50jyo": {
+      "verdict": "DUPLICATE",
+      "reason": "Both give the same remedy for sour shots: grind finer."
+    },
+    "f-1wemjl5|f-hg9cg8": {
+      "verdict": "DUPLICATE",
+      "reason": "Both express the same principle that shot time is an outcome, not a direct control parameter."
+    },
+    "f-3vp9fd|f-mzmnbl": {
+      "verdict": "DUPLICATE",
+      "reason": "Both emphasize that distribution and levelness matter more than tamping pressure for preventing channeling."
+    },
+    "f-1deqpjt|f-w3f8u0": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes the problem (channeling) while B describes a solution technique (pre-infusion) to prevent it."
+    },
+    "f-hz6i2z|f-jwxinq": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses dose effects on resistance while B addresses distribution/tamping effects on uniformity; different aspects of puck preparation."
+    },
+    "f-1tu31h8|f-d9kydj": {
+      "verdict": "COMPATIBLE",
+      "reason": "A emphasizes extraction yield's importance while B clarifies that TDS and extraction yield are independent variables; complementary perspectives."
+    },
+    "f-hoadsc|f-zd4jgb": {
+      "verdict": "COMPATIBLE",
+      "reason": "A states darker roasts extract faster, B recommends coarser grind as a consequence; B follows logically from A."
+    },
+    "f-19so8dl|f-hp4zzv": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses pre-shot temperature purging while B addresses weekly cleaning maintenance; different procedures with different purposes."
+    },
+    "f-19r5w88|f-1ht76qy": {
+      "verdict": "COMPATIBLE",
+      "reason": "A discusses temperature effects while B discusses water hardness effects; different parameters affecting extraction."
+    },
+    "f-3vp9fd|f-hz6i2z": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both emphasize level distribution over tamping pressure for preventing channeling; B elaborates on A's point about what matters most."
+    },
+    "f-1q50jyo|f-hg9cg8": {
+      "verdict": "COMPATIBLE",
+      "reason": "A criticizes fixed time targets generally while B gives specific troubleshooting advice for sour shots; different contexts, not contradictory."
+    },
+    "f-mzmnbl|f-y5u62r": {
+      "verdict": "COMPATIBLE",
+      "reason": "A discusses dose amount (20g) while B discusses distribution and tamping technique; different aspects of preparation."
+    },
+    "f-n8fobx|f-oprp4j": {
+      "verdict": "DUPLICATE",
+      "reason": "Both recommend starting with a 1:2 brew ratio, just phrased differently."
+    },
+    "f-1cmzwtx|f-baxbd3": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes the steaming process phases while B describes temperature limits; different aspects of milk steaming."
+    },
+    "f-19y4d9f|f-1cmzwtx": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes the steaming process while B compares milk types; different aspects of milk steaming."
+    },
+    "f-1jthtwv|f-1ucf4h": {
+      "verdict": "COMPATIBLE",
+      "reason": "A sets minimum rest time (7 days) while B sets maximum freshness window (1 month); both can be true."
+    },
+    "f-1l0v3kr|f-1rvtnvx": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state beans need at least 7 days rest post-roast, just phrased differently."
+    },
+    "f-p8pa5x|f-twplkx": {
+      "verdict": "COMPATIBLE",
+      "reason": "A states the dose amount while B describes the resulting brew ratio calculation; complementary information."
+    },
+    "f-hz6i2z|f-mzmnbl": {
+      "verdict": "COMPATIBLE",
+      "reason": "A explains why puck prep matters (reduces channeling) while B prioritizes distribution over pressure; complementary perspectives."
+    },
+    "f-1lw1v1e|f-1s38cp3": {
+      "verdict": "DUPLICATE",
+      "reason": "Both claims state that finer grind increases extraction yield, with B simply adding the mechanism (surface area)."
+    },
+    "f-hz6i2z|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses puck preparation's effect on channeling, while B addresses grind size's effect on flow resistance—different aspects of espresso brewing."
+    },
+    "f-bcqyxi|f-xpqqsw": {
+      "verdict": "COMPATIBLE",
+      "reason": "A defines extraction yield calculation while B defines dose as a component used in that calculation—complementary information."
+    },
+    "f-swogz|f-xpqqsw": {
+      "verdict": "COMPATIBLE",
+      "reason": "A defines extraction yield calculation while B defines brew ratio—two different metrics using related but distinct formulas."
+    },
+    "f-1nezgo4|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes the mechanical effect of finer grind (resistance/pressure), while B gives a troubleshooting recommendation—different aspects that are actually consistent."
+    },
+    "f-1jthtwv|f-1rvtnvx": {
+      "verdict": "COMPATIBLE",
+      "reason": "A states minimum rest time (at least 7 days) while B specifies an optimal window (7-21 days)—B encompasses A's minimum."
+    },
+    "f-1deqpjt|f-3vp9fd": {
+      "verdict": "COMPATIBLE",
+      "reason": "A addresses tamping technique while B addresses pre-infusion—two different methods for reducing channeling."
+    },
+    "f-st67m4|f-twplkx": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state the same 1:2 ratio target for double espresso, with B providing a specific example calculation."
+    },
+    "f-1wemjl5|f-z373ol": {
+      "verdict": "COMPATIBLE",
+      "reason": "A describes shot time as a dependent variable while B explains one mechanism (grind affecting pressure and flow), no contradiction."
+    },
+    "f-1jthtwv|f-1n2epd6": {
+      "verdict": "COMPATIBLE",
+      "reason": "A explains the problem with fresh beans and B provides the solution (resting period), they complement each other."
+    },
+    "f-1cm0y1v|f-1jthtwv": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both address different time boundaries: minimum rest period (7 days) vs. maximum freshness window (21 days)."
+    },
+    "f-1axlvr5|f-1svjtq1": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state the same relationship between temperature and extraction yield, just phrased as inverse statements."
+    },
+    "f-19r5w88|f-1axlvr5": {
+      "verdict": "DUPLICATE",
+      "reason": "Both describe the same temperature-extraction relationship with slightly different emphasis, no contradiction."
+    },
+    "f-19r5w88|f-1lw1v1e": {
+      "verdict": "COMPATIBLE",
+      "reason": "Both describe different methods to increase extraction yield (grind size vs. temperature), not contradictory."
+    },
+    "f-dz7ahy|f-oprp4j": {
+      "verdict": "COMPATIBLE",
+      "reason": "A discusses brew ratio for extraction while B discusses scale buildup effects on equipment, entirely different topics."
+    },
+    "f-1jthtwv|f-1l0v3kr": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state the same 7-day minimum rest requirement, just phrased differently (should rest vs. too gassy before)."
+    },
+    "f-19y4d9f|f-zd4jgb": {
+      "verdict": "COMPATIBLE",
+      "reason": "One claim addresses coffee roast extraction speed, the other addresses milk foam stability—different aspects of espresso preparation."
+    },
+    "f-1miofd8|f-y5u62r": {
+      "verdict": "COMPATIBLE",
+      "reason": "One specifies extraction time target, the other specifies dose amount—different parameters that work together in espresso brewing."
+    },
+    "f-1miofd8|f-1wpbp7h": {
+      "verdict": "CONFLICT",
+      "reason": "Both specify extraction time ranges for double espresso but give incompatible durations (32-38 seconds vs 25-30 seconds)."
+    },
+    "f-1wpbp7h|f-uftebe": {
+      "verdict": "CONFLICT",
+      "reason": "Maria recommends 25–30 seconds while Jonas recommends 32–38 seconds for the same double espresso shot time."
+    },
+    "f-p8pa5x|f-y5u62r": {
+      "verdict": "CONFLICT",
+      "reason": "One claims 18 grams is standard while the other recommends 20 grams for double espresso dose."
+    },
+    "f-1cm0y1v|f-1rvtnvx": {
+      "verdict": "COMPATIBLE",
+      "reason": "One states optimal window is 7–21 days, the other notes degradation after 21 days; these align rather than conflict."
+    },
+    "f-twplkx|f-y5u62r": {
+      "verdict": "CONFLICT",
+      "reason": "One specifies 18 grams input while the other recommends 20 grams for double espresso dose."
+    },
+    "f-n8fobx|f-st67m4": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state 1:2 brew ratio is the target/starting point for espresso."
+    },
+    "f-lgpvv9|f-st67m4": {
+      "verdict": "DUPLICATE",
+      "reason": "Both state 1:2 as the target/typical brew ratio for espresso."
+    },
+    "f-17e8j54|f-st67m4": {
+      "verdict": "COMPATIBLE",
+      "reason": "One addresses brew ratio (1:2) and the other addresses brew pressure (9 bar); different parameters."
+    },
+    "f-dz7ahy|f-w3f8u0": {
+      "verdict": "COMPATIBLE",
+      "reason": "Channeling and scale buildup are different problems with different causes and effects on espresso brewing."
+    }
+  }
+}

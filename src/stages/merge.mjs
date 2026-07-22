@@ -1,7 +1,7 @@
 // MERGE (mechanical) — combine per-domain facts into facts.json (grouped) + a dependency graph + the hidden/
 // breakpoint slices. Dedups near-identical statements within a domain, unions sources, bumps multi-source to high.
 import fs from "node:fs";
-import { CONF_RANK, uniq } from "../lib/schema.mjs";
+import { CONF_RANK, uniq, normKey, factId } from "../lib/schema.mjs";
 
 export async function run(project) {
   const dir = project.outPath("facts");
@@ -15,12 +15,7 @@ export async function run(project) {
     for (const m of Array.isArray(arr) ? arr : []) if (m.statement) all.push(m);
   }
 
-  const key = (m) =>
-    `${m.domain}|${String(m.statement)
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}]+/gu, " ")
-      .trim()
-      .slice(0, 70)}`;
+  const key = (m) => `${m.domain}|${normKey(m.statement)}`;
   const merged = new Map();
   for (const m of all) {
     const k = key(m),
@@ -46,6 +41,7 @@ export async function run(project) {
       cur.confidence = "high";
   }
   const facts = [...merged.values()];
+  for (const m of facts) m.id = factId(m); // stable id: survives re-runs because it hashes the dedup key itself
   const byDomain = {};
   for (const m of facts) (byDomain[m.domain] ||= []).push(m);
   project.writeOut("facts.json", byDomain);

@@ -3,6 +3,7 @@
 // keep their fields (statement/dependsOn/affects/…) so the graph has edges even in offline mode.
 import fs from "node:fs";
 import { join, relative, basename } from "node:path";
+import { withinRoot } from "../../lib/guard.mjs";
 
 // minimal glob for patterns like "raw/docs/**/*.md" (** = any dirs incl. none, * = within a segment). No braces.
 function globFiles(root, pattern) {
@@ -35,7 +36,7 @@ function globFiles(root, pattern) {
   };
   if (fs.existsSync(base) && fs.statSync(base).isDirectory()) walk(base);
   else if (fs.existsSync(abs)) out.push(abs);
-  return out;
+  return out.filter((p) => withinRoot(root, p)); // reject ../ escapes from cfg.path
 }
 
 function splitMarkdown(text) {

@@ -1,11 +1,13 @@
 // GITHUB collector — pull text files (docs/code) from a repo via the GitHub API and extract facts. Config:
 // { repo: "owner/name", branch?: "main", include?: "\\.(md|txt|ts|py)$", max?: 40, keyEnv?: "GITHUB_TOKEN" }.
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
+import { safeFetch } from "../../lib/guard.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 export async function collect(project, cfg) {
   const repo = cfg.repo;
   if (!repo) return [];
+  const enc = (s) => String(s).split("/").map(encodeURIComponent).join("/");
   const branch = cfg.branch || "main";
   const inc = new RegExp(cfg.include || "\\.(md|markdown|txt|rst)$", "i");
   const max = cfg.max || 40;
@@ -13,14 +15,14 @@ export async function collect(project, cfg) {
   const tok = cfg.keyEnv && process.env[cfg.keyEnv];
   if (tok) headers.authorization = `Bearer ${tok}`;
   const api = async (u) => {
-    const r = await fetch(`https://api.github.com${u}`, {
+    const r = await safeFetch(`https://api.github.com${u}`, {
       headers,
       signal: AbortSignal.timeout(30000),
     });
     return r.ok ? r.json() : null;
   };
   const tree = await api(
-    `/repos/${repo}/git/trees/${branch}?recursive=1`,
+    `/repos/${enc(repo)}/git/trees/${encodeURIComponent(branch)}?recursive=1`,
   ).catch(() => null);
   if (!tree?.tree) {
     project.log(`    github ${repo}: could not list tree`);
@@ -34,8 +36,8 @@ export async function collect(project, cfg) {
   for (const p of paths) {
     let text;
     try {
-      const r = await fetch(
-        `https://raw.githubusercontent.com/${repo}/${branch}/${p.path}`,
+      const r = await safeFetch(
+        `https://raw.githubusercontent.com/${enc(repo)}/${encodeURIComponent(branch)}/${enc(p.path)}`,
         { headers, signal: AbortSignal.timeout(20000) },
       );
       text = await r.text();
@@ -44,11 +46,16 @@ export async function collect(project, cfg) {
     }
     for (const ch of chunk(text, project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / rules / numbers about "${project.config.topic}" from this repo file. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text: out } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3000,
-        });
+        const sys = `Extract factual claims / rules / numbers about "${project.config.topic}" from this repo file. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text: out } = await chat(
+          collectTier,
+          sys,
+          asData("REPO FILE", ch),
+          {
+            json: true,
+            maxTokens: 3000,
+          },
+        );
         let d;
         try {
           d = JSON.parse(out);

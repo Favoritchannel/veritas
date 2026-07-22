@@ -1,5 +1,6 @@
 // API collector — GET one or more endpoints and extract facts from the response (JSON or text) with the collect tier.
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
+import { safeFetch } from "../../lib/guard.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 export async function collect(project, cfg) {
@@ -12,7 +13,7 @@ export async function collect(project, cfg) {
   for (const url of urls) {
     let body;
     try {
-      const r = await fetch(url, {
+      const r = await safeFetch(url, {
         headers,
         signal: AbortSignal.timeout(30000),
       });
@@ -23,11 +24,16 @@ export async function collect(project, cfg) {
     }
     for (const ch of chunk(body, project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / fields / numbers about "${project.config.topic}" from this API response. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3000,
-        });
+        const sys = `Extract factual claims / fields / numbers about "${project.config.topic}" from this API response. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text } = await chat(
+          collectTier,
+          sys,
+          asData("API RESPONSE", ch),
+          {
+            json: true,
+            maxTokens: 3000,
+          },
+        );
         let d;
         try {
           d = JSON.parse(text);

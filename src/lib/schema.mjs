@@ -62,4 +62,11 @@ export function deriveStatus(fact) {
 }
 
 export const uniq = (a) => [...new Set(a)];
+// Coerce a model-returned value to an array — a hostile/broken provider might return {facts:"…"} instead of a
+// list; this keeps a for-of from iterating a string's characters. Output is never executed, so this is just hygiene.
+export const asArray = (x) => (Array.isArray(x) ? x : []);
 export const esc = (s) => String(s || "").replace(/\n/g, " ");
+// Markdown-escape untrusted text before it lands in a generated .md report — a malicious statement must not be
+// able to inject headings, links, or fenced commands. Backslash is in the class so a trailing "\" can't
+// neutralize the escaping. Use this (not esc) for any model-derived text written into markdown.
+export const mdEsc = (s) => esc(s).replace(/[\\`*_[\]#>|]/g, "\\$&");

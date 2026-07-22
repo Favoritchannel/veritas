@@ -1,20 +1,23 @@
 // PDF collector — extract text from PDFs (papers, manuals, reports) and pull facts. Optional dep: `npm i pdf-parse`.
 import fs from "node:fs";
 import { join, relative, basename } from "node:path";
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
+import { withinRoot } from "../../lib/guard.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 function pdfFiles(root, pat) {
   const abs = join(root, pat);
   const dir = abs.replace(/[\\/][^\\/]*\*.*$/, "");
+  let out;
   try {
-    return fs
+    out = fs
       .readdirSync(dir)
       .filter((f) => f.toLowerCase().endsWith(".pdf"))
       .map((f) => join(dir, f));
   } catch {
-    return fs.existsSync(abs) ? [abs] : [];
+    out = fs.existsSync(abs) ? [abs] : [];
   }
+  return out.filter((p) => withinRoot(root, p)); // reject ../ escapes from cfg.path
 }
 
 export async function collect(project, cfg) {
@@ -37,11 +40,16 @@ export async function collect(project, cfg) {
     const ref = relative(project.root, f).replace(/\\/g, "/");
     for (const ch of chunk(text, project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / findings / numbers about "${project.config.topic}" from this document fragment. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text: out } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3000,
-        });
+        const sys = `Extract factual claims / findings / numbers about "${project.config.topic}" from this document fragment. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text: out } = await chat(
+          collectTier,
+          sys,
+          asData("PDF TEXT", ch),
+          {
+            json: true,
+            maxTokens: 3000,
+          },
+        );
         let d;
         try {
           d = JSON.parse(out);

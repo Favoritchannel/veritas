@@ -29,7 +29,10 @@ export function loadProject(configPath) {
   const tier = (name) => {
     const t = config.compute && config.compute[name];
     if (!t) throw new Error(`compute tier '${name}' not configured`);
-    return t;
+    // Carry the optional LLM host allow-list onto the tier so llm.chat can enforce it (exfil defense).
+    return config.security?.allowedLLMHosts
+      ? { ...t, allowedHosts: config.security.allowedLLMHosts }
+      : t;
   };
   const outPath = (...p) => join(outDir, ...p);
   const readOut = (name, dflt) => {

@@ -1,7 +1,7 @@
 // DATABASE collector — pull rows from a SQL database and turn them into facts. Optional drivers (install the one
 // you need): better-sqlite3 (sqlite), pg (postgres), mysql2 (mysql). Config:
 // { driver:"sqlite"|"postgres"|"mysql", conn:"file.db" | connStringEnv:"DB_URL", query:"SELECT ...", textColumns?:[], maxRows?:2000, llm?:false }
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 async function rows(cfg) {
@@ -65,11 +65,16 @@ export async function collect(project, cfg) {
   const entries = [];
   for (const ch of chunk(data.map(asText).join("\n"), project.chunkChars)) {
     try {
-      const sys = `Extract factual claims / numbers about "${project.config.topic}" from these database rows. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-      const { text } = await chat(collectTier, sys, ch, {
-        json: true,
-        maxTokens: 3000,
-      });
+      const sys = `Extract factual claims / numbers about "${project.config.topic}" from these database rows. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+      const { text } = await chat(
+        collectTier,
+        sys,
+        asData("DATABASE ROWS", ch),
+        {
+          json: true,
+          maxTokens: 3000,
+        },
+      );
       let d;
       try {
         d = JSON.parse(text);

@@ -4,7 +4,7 @@
 // Verdicts are CACHED in out/conflicts.json keyed by the sorted fact-id pair, so re-running verify never
 // re-judges a pair (no verdict flapping, no repeat cost). conflictId is a hash of the sorted pair — stable
 // across runs, so resolutions recorded against it stay bound.
-import { STATUS, conflictId, esc } from "./schema.mjs";
+import { STATUS, conflictId, mdEsc, asArray } from "./schema.mjs";
 import { chatJson, asData } from "./llm.mjs";
 import { waves } from "./waves.mjs";
 
@@ -90,7 +90,7 @@ async function judgePairs(project, tier, pairs, cache) {
         const d = await chatJson(tier, sys, asData("CLAIM PAIRS", listing), {
           maxTokens: 2500,
         });
-        for (const v of d.verdicts || []) {
+        for (const v of asArray(d.verdicts)) {
           const p = batch[(v.pair || 0) - 1];
           if (p && /^(CONFLICT|COMPATIBLE|DUPLICATE)$/.test(v.verdict)) {
             cache.set(pairKey(p.a.id, p.b.id), {
@@ -185,11 +185,6 @@ export async function detectConflicts(project, all, tier) {
   );
   return conflicts;
 }
-
-// Markdown-escape untrusted text before it lands in CONFLICTS.md — a malicious statement must not be able
-// to render fake resolve commands or restructure the report (backticks, emphasis, headings, links).
-// Backslash is in the class so input ending in "\" cannot neutralize the escaping itself.
-const mdEsc = (s) => esc(s).replace(/[\\`*_[\]#>|]/g, "\\$&");
 
 function srcNames(sources) {
   // "interview:Maria Rossi" → "Maria Rossi"; anything else → shown as-is

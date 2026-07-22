@@ -3,11 +3,14 @@
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 export async function collect(project, cfg) {
-  const YT = cfg.ytdlp || "yt-dlp";
+  // A custom yt-dlp binary path is code execution: honor it only when exec is explicitly allowed, so a shared
+  // config can't point it at an arbitrary executable. Default stays the PATH-resolved "yt-dlp".
+  const allowExec = project.config.security?.allowExec === true;
+  const YT = allowExec && cfg.ytdlp ? cfg.ytdlp : "yt-dlp";
   try {
     execFileSync(YT, ["--version"], { stdio: "ignore" });
   } catch {
@@ -74,11 +77,16 @@ export async function collect(project, cfg) {
     if (text.length < 500) continue;
     for (const ch of chunk(text, project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / mechanisms / numbers about "${project.config.topic}" from this video transcript fragment. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text: out } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3500,
-        });
+        const sys = `Extract factual claims / mechanisms / numbers about "${project.config.topic}" from this video transcript fragment. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text: out } = await chat(
+          collectTier,
+          sys,
+          asData("VIDEO TRANSCRIPT", ch),
+          {
+            json: true,
+            maxTokens: 3500,
+          },
+        );
         let d;
         try {
           d = JSON.parse(out);

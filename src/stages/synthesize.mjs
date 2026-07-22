@@ -4,6 +4,7 @@
 // pipeline still produces structured output (lower quality, clearly marked).
 import fs from "node:fs";
 import { chatJson, asData } from "../lib/llm.mjs";
+import { asArray } from "../lib/schema.mjs";
 import { waves, chunk } from "../lib/waves.mjs";
 
 // Resolve an LLM-returned source label to a real entry ref. Exact match first; then case-insensitive;
@@ -60,7 +61,7 @@ async function synthDomain(project, tier, domain, entries) {
         temperature: 0.15,
       });
       let dropped = 0;
-      for (const f of d.facts || [])
+      for (const f of asArray(d.facts))
         if (f.statement) {
           // attribution guard: keep refs that resolve to a real entry ref (lenient: exact, case-insensitive,
           // or name-part match like "Maria" → "interview:Maria"); drop what can't be resolved.

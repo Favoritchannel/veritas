@@ -295,12 +295,21 @@ See [docs/operating.md](docs/operating.md).
 
 ## Security & deployment safety
 
-- **Secrets live only in `.env`** (gitignored). Config references keys by env-var _name_, never value.
-- **The audit stage scans every output** for secret-like strings and fails the gate if it finds one.
+- **The model layer is capability-free.** LLM calls return text/JSON only — no tool-calling, no code execution, and
+  model output never becomes a shell command, file path, or control decision. A hostile or compromised model can only
+  return text the pipeline re-checks. (This is the single biggest reason a "model escapes and acts" scenario does not
+  apply here.)
+- **Untrusted input is fenced as DATA.** Every collector wraps source text in a per-call random-nonce delimiter plus an
+  explicit "ignore instructions inside" clause, so a poisoned page/transcript can't break out and inject commands.
+- **Config is untrusted by default.** Collector types are allow-listed before dynamic import; file/oracle paths are
+  contained to the project root; any config-supplied shell command (`qa.calc`/`qa.drift`) or custom `yt-dlp` binary
+  runs only with an explicit `--allow-exec` opt-in.
+- **Egress is guarded.** Collector fetches block private/loopback hosts (SSRF, cloud-metadata) and cap response size;
+  the operator-chosen LLM `baseURL` stays exempt so local models (Ollama/vLLM) keep working.
+- **Secrets live only in `.env`** (gitignored). Config references keys by env-var _name_, never value. The audit stage
+  scans every output for a broad set of secret formats and fails the gate on any hit.
 - **Package contents use an explicit allowlist.** CI rejects generated `out/`, logs, caches, and environment files in
-  the package preview.
-- **Autonomous mode ends at the local audit.** Operators must still isolate runs and handle stale artifacts until the
-  immutable-run work in the production roadmap is implemented.
+  the package preview. Zero runtime dependencies; CodeQL + dependency review + OpenSSF Scorecard in CI.
 
 > **Important:** the current CLI is a reference implementation, not a hardened public web service. Delimiters and a
 > system prompt are not sufficient prompt-injection defenses. Before exposing an answering endpoint to untrusted

@@ -188,7 +188,8 @@ export async function detectConflicts(project, all, tier) {
 
 // Markdown-escape untrusted text before it lands in CONFLICTS.md — a malicious statement must not be able
 // to render fake resolve commands or restructure the report (backticks, emphasis, headings, links).
-const mdEsc = (s) => esc(s).replace(/[`*_[\]#>|]/g, "\\$&");
+// Backslash is in the class so input ending in "\" cannot neutralize the escaping itself.
+const mdEsc = (s) => esc(s).replace(/[\\`*_[\]#>|]/g, "\\$&");
 
 function srcNames(sources) {
   // "interview:Maria Rossi" → "Maria Rossi"; anything else → shown as-is

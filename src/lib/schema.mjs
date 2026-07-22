@@ -11,8 +11,33 @@ export const STATUS = {
   PLAUSIBLE: "PLAUSIBLE",
   NEEDS_VERIFICATION: "NEEDS-VERIFICATION",
   CONTRADICTED: "CONTRADICTED",
+  DISPUTED: "DISPUTED",
 };
 export const CONF_RANK = { high: 3, medium: 2, low: 1 };
+
+// Stable fact identity. normKey mirrors the merge dedup key (so id == dedup identity); NFKD-fold first so
+// diacritic variants ("Müller"/"Muller") normalize to the same key.
+export const normKey = (s) =>
+  String(s || "")
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .slice(0, 70);
+
+function fnv1a(s) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+export const factId = (m) =>
+  "f-" + fnv1a(`${m.domain}|${normKey(m.statement)}`).toString(36);
+export const conflictId = (idA, idB) =>
+  "c-" + fnv1a([idA, idB].sort().join("|")).toString(36);
 
 export function normalizeDomain(domains, s) {
   const x = String(s || "")

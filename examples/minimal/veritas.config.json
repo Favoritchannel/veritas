@@ -4,23 +4,34 @@
 
   "oracle": { "type": "none", "ref": "" },
 
-  "sources": [{ "type": "files", "config": { "path": "raw/**/*.json" } }],
+  "sources": [
+    { "type": "files", "config": { "path": "raw/**/*.json" } },
+    {
+      "type": "interview",
+      "config": { "path": "raw/interviews/*.md", "domain": "extraction" }
+    }
+  ],
 
   "compute": {
     "collect": {
       "baseURL": "https://openrouter.ai/api/v1",
       "model": "google/gemini-2.5-flash-lite",
-      "keyEnv": "COLLECT_KEY"
+      "keyEnv": "OPENROUTER_API_KEY"
     },
     "analyze": {
       "baseURL": "https://openrouter.ai/api/v1",
-      "model": "anthropic/claude-sonnet-5",
-      "keyEnv": "ANALYZE_KEY"
+      "model": "anthropic/claude-haiku-4.5",
+      "keyEnv": "OPENROUTER_API_KEY"
+    },
+    "judge": {
+      "baseURL": "https://openrouter.ai/api/v1",
+      "model": "anthropic/claude-sonnet-4.5",
+      "keyEnv": "OPENROUTER_API_KEY"
     },
     "serve": {
       "baseURL": "https://openrouter.ai/api/v1",
-      "model": "openai/gpt-5-mini",
-      "keyEnv": "SERVE_KEY"
+      "model": "anthropic/claude-haiku-4.5",
+      "keyEnv": "OPENROUTER_API_KEY"
     }
   },
 

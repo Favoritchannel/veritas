@@ -95,6 +95,11 @@ export async function run(project, { flags } = { flags: new Set() }) {
         try {
           const inp = String(fx.shareCode ?? fx.input ?? "");
           // Inline via {input} for short inputs; otherwise pipe via stdin (long inputs blow the OS arg-length limit).
+          // Shell-metachar inputs are refused for the inline path — fixture files can come from untrusted repos.
+          if (qa.calc.cmd.includes("{input}") && /[`$\\;|&<>]/.test(inp))
+            throw new Error(
+              "fixture input contains shell metacharacters — remove {input} from qa.calc.cmd to pipe via stdin",
+            );
           const hasPh = qa.calc.cmd.includes("{input}");
           const cmd = hasPh
             ? qa.calc.cmd.replace("{input}", JSON.stringify(inp))

@@ -2,11 +2,20 @@
 // Each collector exports  async collect(project, sourceConfig) => rawEntry[]  where
 //   rawEntry = { text, kind, values?, dependsOn?, confidence, domain, source:{type,ref,title} }.
 // Unknown/unavailable source types are skipped with a warning (the tool degrades, never crashes).
+import { assertCollector } from "../../lib/guard.mjs";
+
 export async function run(project) {
   const sources = project.config.sources || [];
   const all = [];
   for (const s of sources) {
     const type = s.type;
+    // Allow-list before the dynamic import: a config value like "../../lib/llm" must not load an arbitrary module.
+    try {
+      assertCollector(type);
+    } catch {
+      project.log(`  ! unknown/blocked source type '${type}' — skipping`);
+      continue;
+    }
     let mod;
     try {
       mod = await import(`./${type}.mjs`);

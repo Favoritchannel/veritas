@@ -3,7 +3,9 @@
 // Requires an oracle + the analyze tier; otherwise it is skipped (there is nothing to cross-check against).
 import fs from "node:fs";
 import { join } from "node:path";
-import { chatJson, asData } from "../lib/llm.mjs";
+import { chatJson, asData, DATA_CLAUSE } from "../lib/llm.mjs";
+import { asArray } from "../lib/schema.mjs";
+import { withinRoot } from "../lib/guard.mjs";
 import { waves } from "../lib/waves.mjs";
 
 function oracleExcerpt(project) {
@@ -11,6 +13,7 @@ function oracleExcerpt(project) {
   if (!o.type || o.type === "none" || !o.ref) return "";
   try {
     const abs = join(project.root, o.ref);
+    if (!withinRoot(project.root, abs)) return ""; // oracle.ref must not escape the project root
     if (fs.existsSync(abs) && fs.statSync(abs).isFile())
       return fs.readFileSync(abs, "utf-8").slice(0, 120000);
     const dir = abs.replace(/[\\/][^\\/]*\*.*$/, "");
@@ -26,6 +29,7 @@ function oracleExcerpt(project) {
       for (const x of e) {
         if (tot > 120000) return;
         const p = join(d, x.name);
+        if (!withinRoot(project.root, p)) continue;
         if (x.isDirectory()) walk(p);
         else if (/\.(md|txt|json|ts|js|py|rb|go)$/i.test(x.name)) {
           const t = fs.readFileSync(p, "utf-8");
@@ -34,7 +38,9 @@ function oracleExcerpt(project) {
         }
       }
     };
-    walk(fs.existsSync(dir) ? dir : project.root);
+    walk(
+      fs.existsSync(dir) && withinRoot(project.root, dir) ? dir : project.root,
+    );
     return out.join("\n").slice(0, 120000);
   } catch {
     return "";
@@ -69,7 +75,7 @@ export async function run(project) {
         .map((m) => `- ${m.statement}`)
         .join("\n")
         .slice(0, 8000);
-      const sys = `You find HIDDEN interconnections that an AUTHORITATIVE reference encodes but the community FACTS do NOT state — likely-true relationships nobody has connected. For domain "${domain}" of "${project.config.topic}": read the reference, trace how variables/entities depend on each other, and report couplings/thresholds/chains ABSENT from the facts list. Each finding must follow from the reference (cite it). Output STRICT JSON {"findings":[{"finding":str,"mechanism":str,"why_missed":str,"test":str,"confidence":"high|medium|low"}]}. In ${project.language}. Empty if none.`;
+      const sys = `You find HIDDEN interconnections that an AUTHORITATIVE reference encodes but the community FACTS do NOT state — likely-true relationships nobody has connected. For domain "${domain}" of "${project.config.topic}": read the reference, trace how variables/entities depend on each other, and report couplings/thresholds/chains ABSENT from the facts list. Each finding must follow from the reference (cite it). Output STRICT JSON {"findings":[{"finding":str,"mechanism":str,"why_missed":str,"test":str,"confidence":"high|medium|low"}]}. In ${project.language}. Empty if none.${DATA_CLAUSE}`;
       try {
         const d = await chatJson(
           tier,
@@ -77,7 +83,7 @@ export async function run(project) {
           `DOMAIN: ${domain}\n${asData("REFERENCE", ora)}\n${asData("KNOWN FACTS", facts)}`,
           { maxTokens: 4000 },
         );
-        for (const f of d.findings || [])
+        for (const f of asArray(d.findings))
           if (f.finding) findings.push({ domain, ...f });
       } catch (e) {
         project.log(

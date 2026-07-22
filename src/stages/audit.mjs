@@ -5,13 +5,33 @@ import fs from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 
-const SECRET =
-  /(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|xox[baprs]-[A-Za-z0-9-]{10,}|ghp_[A-Za-z0-9]{30,}|AIza[0-9A-Za-z_-]{30,})/;
+// Secret patterns to catch in generated outputs (a pre-share safety net). Global flag so we can count every hit.
+const SECRET = new RegExp(
+  [
+    "sk-ant-[A-Za-z0-9_-]{20,}", // Anthropic (before generic sk- so it's not clipped at the dash)
+    "sk-[A-Za-z0-9]{20,}", // OpenAI & generic
+    "sk_(?:live|test)_[0-9A-Za-z]{16,}", // Stripe
+    "github_pat_[0-9A-Za-z_]{22,}", // GitHub fine-grained PAT
+    "ghp_[A-Za-z0-9]{30,}", // GitHub classic PAT
+    "glpat-[0-9A-Za-z_-]{20,}", // GitLab PAT
+    "AKIA[0-9A-Z]{16}", // AWS access key id
+    "aws_secret_access_key\\s*[=:]\\s*[A-Za-z0-9/+]{40}", // AWS secret (labeled)
+    "AIza[0-9A-Za-z_-]{30,}", // Google API key
+    "xox[baprs]-[A-Za-z0-9-]{10,}", // Slack
+    "[MNO][A-Za-z0-9_-]{23}\\.[A-Za-z0-9_-]{6}\\.[A-Za-z0-9_-]{27,40}", // Discord bot token
+    "eyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}", // JWT
+    "-----BEGIN [A-Z ]*PRIVATE KEY-----", // PEM
+  ].join("|"),
+  "g",
+);
 
 export async function run(project, { flags } = { flags: new Set() }) {
   const checks = [];
-  const ok = (name, pass, detail) =>
-    checks.push({ name, pass: !!pass, detail });
+  // A `warn` check never fails GO — used for security gates that are advisory by default (e.g. exec skipped).
+  const ok = (name, pass, detail, warn = false) =>
+    checks.push({ name, pass: !!pass, detail, warn });
+  const allowExec =
+    flags?.has("--allow-exec") || project.config.security?.allowExec === true;
   const exists = (f) => fs.existsSync(project.outPath(f));
 
   ok("artifacts:facts", exists("facts.json"), "facts.json present");
@@ -48,17 +68,24 @@ export async function run(project, { flags } = { flags: new Set() }) {
     "graph.html has content",
   );
 
-  // secret scan across the whole out dir
-  let leak = "";
+  // secret scan across the whole out dir — every text file, every hit (not just the first), reported by count.
+  const leaks = [];
   const scan = (d) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
       const p = `${d}/${e.name}`;
-      if (e.isDirectory()) scan(p);
-      else if (/\.(json|jsonl|md|txt|html|log)$/.test(e.name)) {
-        const t = fs.readFileSync(p, "utf-8");
-        if (SECRET.test(t)) leak = p;
+      if (e.isDirectory()) {
+        scan(p);
+        continue;
       }
-      if (leak) return;
+      let buf;
+      try {
+        buf = fs.readFileSync(p);
+      } catch {
+        continue;
+      }
+      if (buf.length > 4_000_000 || buf.includes(0)) continue; // skip huge/binary files
+      const hits = buf.toString("utf-8").match(SECRET);
+      if (hits) leaks.push({ file: p, count: hits.length });
     }
   };
   try {
@@ -66,20 +93,35 @@ export async function run(project, { flags } = { flags: new Set() }) {
   } catch {
     /* */
   }
+  const totalHits = leaks.reduce((a, l) => a + l.count, 0);
   ok(
     "security:no-secrets",
-    !leak,
-    leak
-      ? `SECRET-LIKE STRING in ${leak}`
+    leaks.length === 0,
+    leaks.length
+      ? `${totalHits} secret-like string(s) in ${leaks.length} file(s): ${leaks
+          .slice(0, 5)
+          .map((l) => l.file)
+          .join(", ")}`
       : "no secret-like strings in outputs",
   );
 
   // ── optional QA gate (config.qa): the SAME auditor gates a runtime system as well as the corpus. Fully
   // config-driven so the tool stays generic — commands + fixtures + canaries live in the project's config. ──
   const qa = project.config.qa;
+  const wantsExec = !!(qa && (qa.calc?.cmd || qa.drift?.cmd));
+  if (wantsExec)
+    ok(
+      "security:exec-gate",
+      allowExec,
+      allowExec
+        ? "config shell commands allowed (--allow-exec / security.allowExec)"
+        : "config declares shell commands (qa.calc/qa.drift) — gated OFF; pass --allow-exec to run them",
+      !allowExec, // advisory warning, not a GO-blocker, when exec is simply gated off
+    );
   if (qa) {
     // qa:calc — run a deterministic calculator on golden fixtures; assert every expected value within tolerance.
-    if (qa.calc?.cmd && qa.calc?.fixtures) {
+    // Shell execution is gated: skip unless exec is explicitly allowed (an untrusted config must not run commands).
+    if (allowExec && qa.calc?.cmd && qa.calc?.fixtures) {
       let fixtures = [];
       try {
         fixtures = JSON.parse(
@@ -154,8 +196,8 @@ export async function run(project, { flags } = { flags: new Set() }) {
         ok("qa:ai", false, `serve load failed: ${e.message}`);
       }
     }
-    // qa:drift — an external drift-check must pass (exit 0 = no untriaged patch drift).
-    if (qa.drift?.cmd) {
+    // qa:drift — an external drift-check must pass (exit 0 = no untriaged patch drift). Gated like qa:calc.
+    if (allowExec && qa.drift?.cmd) {
       let pass = true,
         detail = "no untriaged drift";
       try {
@@ -173,10 +215,11 @@ export async function run(project, { flags } = { flags: new Set() }) {
   }
 
   const passed = checks.filter((c) => c.pass).length;
-  const go = checks.every((c) => c.pass);
-  let md = `# Audit report — ${project.config.topic}\n\n**${go ? "✅ GO" : "❌ NO-GO"}** — ${passed}/${checks.length} checks passed.\n\n`;
+  const warned = checks.filter((c) => !c.pass && c.warn).length;
+  const go = checks.every((c) => c.pass || c.warn); // warn checks are advisory, never block GO
+  let md = `# Audit report — ${project.config.topic}\n\n**${go ? "✅ GO" : "❌ NO-GO"}** — ${passed}/${checks.length} checks passed${warned ? `, ${warned} warning(s)` : ""}.\n\n`;
   for (const c of checks)
-    md += `- ${c.pass ? "✅" : "❌"} **${c.name}** — ${c.detail}\n`;
+    md += `- ${c.pass ? "✅" : c.warn ? "⚠️" : "❌"} **${c.name}** — ${c.detail}\n`;
   md += `\nTruth ledger: ${
     Object.entries(verified.tally || {})
       .map(([k, v]) => `${k} ${v}`)

@@ -3,8 +3,9 @@
 // against it with the analyze tier. Writes verified.json + VERIFIED.md + expert-report.md + next-targets.md.
 import fs from "node:fs";
 import { join } from "node:path";
-import { STATUS, deriveStatus, esc } from "../lib/schema.mjs";
+import { STATUS, deriveStatus, mdEsc } from "../lib/schema.mjs";
 import { chatJson, asData } from "../lib/llm.mjs";
+import { withinRoot } from "../lib/guard.mjs";
 import { detectConflicts } from "../lib/conflicts.mjs";
 
 export function globToRegExp(value) {
@@ -21,6 +22,7 @@ function oracleText(project) {
     if (o.type === "api") return ""; // per-fact fetch not generalized; use code/dataset for now
     // code/dataset: read files matching the ref (glob-ish) under root, cap total size
     const abs = join(project.root, o.ref);
+    if (!withinRoot(project.root, abs)) return ""; // oracle.ref must not escape the project root
     const dir = abs.replace(/[\\/][^\\/]*\*.*$/, "");
     const rx = globToRegExp(abs);
     const out = [];
@@ -35,6 +37,7 @@ function oracleText(project) {
       for (const x of e) {
         const p = join(d, x.name).replace(/\\/g, "/");
         if (total > 400000) return;
+        if (!withinRoot(project.root, p)) continue;
         if (x.isDirectory()) walk(p);
         else if (
           rx.test(p) ||
@@ -48,7 +51,9 @@ function oracleText(project) {
     };
     if (fs.existsSync(abs) && fs.statSync(abs).isFile())
       return fs.readFileSync(abs, "utf-8").slice(0, 400000);
-    walk(fs.existsSync(dir) ? dir : project.root);
+    walk(
+      fs.existsSync(dir) && withinRoot(project.root, dir) ? dir : project.root,
+    );
     return out.join("\n");
   } catch {
     return "";
@@ -165,7 +170,7 @@ export async function run(project) {
     if (!list.length) continue;
     md += `\n## ${st} (${list.length})\n\n`;
     for (const m of st === STATUS.TRUTH ? list.slice(0, 60) : list)
-      md += `- ${m.hidden ? "🔒 " : ""}_[${m.domain}]_ ${esc(m.statement)}${m.note ? ` — ${esc(m.note).slice(0, 140)}` : ""}\n`;
+      md += `- ${m.hidden ? "🔒 " : ""}_[${mdEsc(m.domain)}]_ ${mdEsc(m.statement)}${m.note ? ` — ${mdEsc(m.note).slice(0, 140)}` : ""}\n`;
   }
   project.writeOut("VERIFIED.md", md);
 
@@ -190,19 +195,19 @@ export async function run(project) {
       a
         .filter((m) => m.status === STATUS.TRUTH)
         .slice(0, 6)
-        .map((m) => `- ${esc(m.statement)}`)
+        .map((m) => `- ${mdEsc(m.statement)}`)
         .join("\n") +
       "\n\n";
   }
   project.writeOut("expert-report.md", report);
-  const nt = `# Next targets\n\n## Thin domains (need more sources)\n${thin.map((d) => `- ${d} (${counts[d]} facts)`).join("\n") || "- (none)"}\n\n## To verify (needs a source or an oracle)\n${all
+  const nt = `# Next targets\n\n## Thin domains (need more sources)\n${thin.map((d) => `- ${mdEsc(d)} (${counts[d]} facts)`).join("\n") || "- (none)"}\n\n## To verify (needs a source or an oracle)\n${all
     .filter((m) => m.status === STATUS.NEEDS_VERIFICATION)
     .slice(0, 20)
-    .map((m) => `- _[${m.domain}]_ ${esc(m.statement)}`)
+    .map((m) => `- _[${mdEsc(m.domain)}]_ ${mdEsc(m.statement)}`)
     .join("\n")}\n\n## Gaps flagged\n${
     gaps
       .slice(0, 20)
-      .map((m) => `- _[${m.domain}]_ ${esc(m.statement)}`)
+      .map((m) => `- _[${mdEsc(m.domain)}]_ ${mdEsc(m.statement)}`)
       .join("\n") || "- (none)"
   }\n`;
   project.writeOut("next-targets.md", nt);

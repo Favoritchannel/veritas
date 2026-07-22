@@ -1,12 +1,13 @@
 // REDDIT collector (social) — uses reddit's public .json endpoints (no auth for public data). Config:
 // { subreddits:["MySubreddit"], threads:["https://reddit.com/r/x/comments/..."], sort?:"top", maxPosts?:30 }.
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
+import { safeFetch } from "../../lib/guard.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 const H = { "user-agent": "veritas/0.1 (knowledge collector)" };
 const getJson = async (u) => {
   try {
-    const r = await fetch(u, {
+    const r = await safeFetch(u, {
       headers: H,
       signal: AbortSignal.timeout(30000),
     });
@@ -44,11 +45,16 @@ export async function collect(project, cfg) {
     (Array.isArray(j) ? j : [j]).forEach((n) => flat(n, texts));
     for (const ch of chunk(texts.join("\n\n"), project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / advice / numbers about "${project.config.topic}" from these reddit posts/comments (community opinion — mark uncertain as low). STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3000,
-        });
+        const sys = `Extract factual claims / advice / numbers about "${project.config.topic}" from these reddit posts/comments (community opinion — mark uncertain as low). STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text } = await chat(
+          collectTier,
+          sys,
+          asData("REDDIT POSTS", ch),
+          {
+            json: true,
+            maxTokens: 3000,
+          },
+        );
         let d;
         try {
           d = JSON.parse(text);

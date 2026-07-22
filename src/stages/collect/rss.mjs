@@ -1,7 +1,8 @@
 // RSS / Atom collector — for blogs, news, forums, podcasts, anything with a feed. Fetches feed(s), pulls each
 // item's title+summary (and optionally the linked page via the web collector), then extracts facts.
 // Config: { feeds:["https://site/feed.xml"], fetchLinked?:false, maxItems?:40 }.
-import { chat } from "../../lib/llm.mjs";
+import { chat, asData, DATA_CLAUSE } from "../../lib/llm.mjs";
+import { safeFetch } from "../../lib/guard.mjs";
 import { chunk } from "../../lib/waves.mjs";
 
 const strip = (s) =>
@@ -36,7 +37,7 @@ export async function collect(project, cfg) {
   for (const feed of cfg.feeds || []) {
     let xml;
     try {
-      const r = await fetch(feed, {
+      const r = await safeFetch(feed, {
         signal: AbortSignal.timeout(30000),
         headers: { "user-agent": "veritas" },
       });
@@ -51,11 +52,16 @@ export async function collect(project, cfg) {
       .join("\n\n");
     for (const ch of chunk(corpus, project.chunkChars)) {
       try {
-        const sys = `Extract factual claims / numbers about "${project.config.topic}" from these feed items. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.`;
-        const { text } = await chat(collectTier, sys, ch, {
-          json: true,
-          maxTokens: 3000,
-        });
+        const sys = `Extract factual claims / numbers about "${project.config.topic}" from these feed items. STRICT JSON {"facts":[{"text":str,"confidence":"high|medium|low"}]}. In ${project.language}.${DATA_CLAUSE}`;
+        const { text } = await chat(
+          collectTier,
+          sys,
+          asData("FEED ITEMS", ch),
+          {
+            json: true,
+            maxTokens: 3000,
+          },
+        );
         let d;
         try {
           d = JSON.parse(text);

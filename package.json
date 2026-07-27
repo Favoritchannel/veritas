@@ -65,7 +65,7 @@
   "//optionalCollectorDeps": "Collectors load these on demand; install only the one you use (kept out of deps to preserve the zero-dependency runtime): playwright (web), pdf-parse (pdf), better-sqlite3|pg|mysql2 (database). See docs/security-and-abuse.md.",
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "eslint": "10.7.0",
+    "eslint": "10.8.0",
     "jsdom": "29.1.1",
     "markdownlint-cli2": "0.23.1",
     "mermaid": "11.16.0",
